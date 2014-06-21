@@ -201,7 +201,7 @@ namespace __gnu_test
 
     std::ofstream out(name, std::ios_base::app);
 
-#ifdef __GTHREADS
+#if __GTHREADS
     if (__gthread_active_p ())
       testname.append ("-thread");
 #endif
@@ -232,7 +232,7 @@ namespace __gnu_test
 
     std::ofstream out(name, std::ios_base::app);
 
-#ifdef __GTHREADS
+#if __GTHREADS
     if (__gthread_active_p ())
       testname.append ("-thread");
 #endif

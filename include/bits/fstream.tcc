@@ -37,6 +37,8 @@
 
 #pragma GCC system_header
 
+#define BUFSIZ 2048
+
 namespace std
 {
   template<typename _CharT, typename _Traits>

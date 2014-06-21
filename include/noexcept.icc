@@ -1,0 +1,20 @@
+#ifndef EXCEPTIONS
+
+#ifndef __NOEXCEPT_ICC__
+#define __NOEXCEPT_ICC__ 
+static int __noexcept_true = 1;
+#endif // !defined(__NOEXCEPT_ICC__)
+
+#undef try
+#define try if(__noexcept_true)
+
+#undef catch
+#define catch(...) else
+
+#undef throw
+#define throw(...)
+
+#undef __throw_exception_again
+#define __throw_exception_again
+
+#endif

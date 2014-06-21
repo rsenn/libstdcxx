@@ -3,7 +3,7 @@
 
 AC_PREREQ(2.57)
 AC_INIT(package-unused, version-unused,, libstdc++)
-AC_CONFIG_SRCDIR(src/ios.cc)
+AC_CONFIG_SRCDIR(src/ios.cc.cpp)
 AC_CONFIG_HEADER(config.h)
 
 # This works around the fact that libtool configuration may change LD
@@ -16,7 +16,7 @@ AC_CONFIG_HEADER(config.h)
 libtool_VERSION=6:3:0
 AC_SUBST(libtool_VERSION)
 
-# Find the rest of the source tree framework.
+# Find the rest of the source tree.cc framework.
 GLIBCXX_TOPREL_CONFIGURE
 
 # Gets build, host, target, *_vendor, *_cpu, *_os, etc.
@@ -36,7 +36,7 @@ GLIBCXX_TOPREL_CONFIGURE
 AC_CANONICAL_SYSTEM
 target_alias=${target_alias-$host_alias}
 
-# Handy for debugging:
+# Handy for debug.ccging:
 #AC_MSG_NOTICE($build / $host / $target / $host_alias / $target_alias); sleep 5
 
 if test "$build" != "$host"; then
@@ -116,7 +116,7 @@ if $GLIBCXX_IS_NATIVE; then
 
   # Check for available headers.
   AC_CHECK_HEADERS([nan.h ieeefp.h endian.h sys/isa_defs.h machine/endian.h \
-  machine/param.h sys/machine.h fp.h locale.h float.h inttypes.h gconv.h \
+  machine/param.h sys/machine.h fp.h locale.cc.h float.h inttypes.h gconv.h \
   sys/types.h])
 
   GLIBCXX_CHECK_COMPILER_FEATURES
@@ -309,7 +309,7 @@ AC_SUBST(LIBSUPCXX_PICFLAGS)
 
 dnl In autoconf 2.5x, AC_OUTPUT is replaced by four AC_CONFIG_* macros,
 dnl which can all be called multiple times as needed, plus one (different)
-dnl AC_OUTPUT macro.  This one lists the files to be created:
+dnl AC_OUTPUT macro.  This one list.ccs the files to be created:
 AC_CONFIG_FILES( \
   Makefile \
   AC_FOREACH([DIR], glibcxx_SUBDIRS, [DIR/Makefile ])

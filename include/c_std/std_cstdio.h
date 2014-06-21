@@ -49,7 +49,13 @@
 #include <bits/c++config.h>
 #include <cstddef>
 
-#include <stdio.h>
+#include <conprint.h>
+#include <maapi.h>
+#include <maarg.h>
+#include <mastdlib.h>
+#include <mavsprintf.h>
+#include <mawvsprintf.h>
+#include <stdint.h>
 
 // Get rid of those macros defined in <stdio.h> in lieu of real functions.
 #undef clearerr

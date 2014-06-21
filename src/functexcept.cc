@@ -100,58 +100,58 @@ namespace std
 #else
   void
   __throw_bad_exception(void)
-  { abort(); }
+  { maExit(1); }
 
   void
   __throw_bad_alloc(void)
-  { abort(); }
+  { maExit(1); }
 
   void
   __throw_bad_cast(void)
-  { abort(); }
+  { maExit(1); }
 
   void
   __throw_bad_typeid(void)
-  { abort(); }
+  { maExit(1); }
 
   void
   __throw_logic_error(const char*)
-  { abort(); }
+  { maExit(1); }
 
   void
   __throw_domain_error(const char*)
-  { abort(); }
+  { maExit(1); }
 
   void
   __throw_invalid_argument(const char*)
-  { abort(); }
+  { maExit(1); }
 
   void
   __throw_length_error(const char*)
-  { abort(); }
+  { maExit(1); }
 
   void
   __throw_out_of_range(const char*)
-  { abort(); }
+  { maExit(1); }
 
   void
   __throw_runtime_error(const char*)
-  { abort(); }
+  { maExit(1); }
 
   void
   __throw_range_error(const char*)
-  { abort(); }
+  { maExit(1); }
 
   void
   __throw_overflow_error(const char*)
-  { abort(); }
+  { maExit(1); }
 
   void
   __throw_underflow_error(const char*)
-  { abort(); }
+  { maExit(1); }
 
   void
   __throw_ios_failure(const char*)
-  { abort(); }
+  { maExit(1); }
 #endif //__EXCEPTIONS
 }

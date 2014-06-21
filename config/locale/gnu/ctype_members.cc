@@ -38,7 +38,7 @@
 
 namespace std
 {
-  // NB: The other ctype<char> specializations are in src/locale.cc and
+  // NB: The other ctype<char> specializations are in src/locale.cpp and
   // various /config/os/* files.
   template<>
     ctype_byname<char>::ctype_byname(const char* __s, size_t __refs)

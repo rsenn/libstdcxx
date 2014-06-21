@@ -35,5 +35,5 @@
 
 #ifdef _GLIBCXX_USE_WCHAR_T
 #define C wchar_t
-#include "locale-inst.cc"
+#include "locale.cc-inst.cc.cpp"
 #endif

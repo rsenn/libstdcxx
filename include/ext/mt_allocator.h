@@ -159,7 +159,7 @@ namespace __gnu_cxx
 	: _M_align(8), _M_max_bytes(128), _M_min_bin(8),
 	  _M_chunk_size(4096 - 4 * sizeof(void*)), 
 	  _M_max_threads(4096), _M_freelist_headroom(10), 
-	  _M_force_new(getenv("GLIBCXX_FORCE_NEW") ? true : false)
+	  _M_force_new(false) //getenv("GLIBCXX_FORCE_NEW") ? true : false)
 	{ }
 
 	explicit
@@ -175,7 +175,7 @@ namespace __gnu_cxx
     private:
       // We need to create the initial lists and set up some variables
       // before we can answer to the first request for memory.
-#ifdef __GTHREADS
+#if __GTHREADS
       static __gthread_once_t 		_S_once;
 #endif
       static bool 			_S_init;
@@ -211,7 +211,7 @@ namespace __gnu_cxx
       // __gthread_key we specify a destructor. When this destructor
       // (i.e. the thread dies) is called, we return the thread id to
       // the front of this list.
-#ifdef __GTHREADS
+#if __GTHREADS
       struct _Thread_record
       {
         // Points to next free thread id record. NULL if last record in list.
@@ -237,7 +237,7 @@ namespace __gnu_cxx
 	// Points to the block_record of the next free block.
         _Block_record* volatile         _M_next;
 
-#ifdef __GTHREADS
+#if __GTHREADS
 	// The thread id of the thread which has requested this block.
         size_t                          _M_thread_id;
 #endif
@@ -250,7 +250,7 @@ namespace __gnu_cxx
 	// for _S_max_threads + global pool 0.
         _Block_record** volatile        _M_first;
 
-#ifdef __GTHREADS
+#if __GTHREADS
 	// An "array" of counters used to keep track of the amount of
 	// blocks that are on the freelist/used for each thread id.
 	// Memory to these "arrays" is allocated in _S_initialize() for
@@ -286,7 +286,7 @@ namespace __gnu_cxx
       // returns if set)
       if (!_S_init)
 	{
-#ifdef __GTHREADS
+#if __GTHREADS
 	  if (__gthread_active_p())
 	    __gthread_once(&_S_once, _S_initialize);
 #endif
@@ -329,7 +329,7 @@ namespace __gnu_cxx
 	  //   no need to lock or change ownership but check for free
 	  //   blocks on global list (and if not add new ones) and
 	  //   get the first one.
-#ifdef __GTHREADS
+#if __GTHREADS
 	  if (__gthread_active_p())
 	    {
 	      __gthread_mutex_lock(__bin._M_mutex);
@@ -399,7 +399,7 @@ namespace __gnu_cxx
 
       __block = __bin._M_first[__thread_id];
       __bin._M_first[__thread_id] = __bin._M_first[__thread_id]->_M_next;
-#ifdef __GTHREADS
+#if __GTHREADS
       if (__gthread_active_p())
 	{
 	  __block->_M_thread_id = __thread_id;
@@ -433,7 +433,7 @@ namespace __gnu_cxx
       char* __c = reinterpret_cast<char*>(__p) - _S_options._M_align;
       _Block_record* __block = reinterpret_cast<_Block_record*>(__c);
       
-#ifdef __GTHREADS
+#if __GTHREADS
       if (__gthread_active_p())
 	{
 	  // Calculate the number of records to remove from our freelist:
@@ -541,7 +541,7 @@ namespace __gnu_cxx
       // If __gthread_active_p() create and initialize the list of
       // free thread ids. Single threaded applications use thread id 0
       // directly and have no need for this.
-#ifdef __GTHREADS
+#if __GTHREADS
       if (__gthread_active_p())
         {
 	  const size_t __k = sizeof(_Thread_record) * _S_options._M_max_threads;
@@ -623,7 +623,7 @@ namespace __gnu_cxx
     __mt_alloc<_Tp>::
     _S_get_thread_id()
     {
-#ifdef __GTHREADS
+#if __GTHREADS
       // If we have thread support and it's active we check the thread
       // key value and return its id or if it's not set we take the
       // first record from _S_thread_freelist and sets the key and
@@ -653,7 +653,7 @@ namespace __gnu_cxx
       return 0;
     }
 
-#ifdef __GTHREADS
+#if __GTHREADS
   template<typename _Tp>
     void
     __mt_alloc<_Tp>::
@@ -694,7 +694,7 @@ namespace __gnu_cxx
     size_t __mt_alloc<_Tp>::_S_bin_size = 1;
 
   // Actual initialization in _S_initialize().
-#ifdef __GTHREADS
+#if __GTHREADS
   template<typename _Tp> 
     __gthread_once_t __mt_alloc<_Tp>::_S_once = __GTHREAD_ONCE_INIT;
 

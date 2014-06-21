@@ -52,13 +52,13 @@
 #endif
 
 // Debug mode support. Debug mode basic_string is not allowed to be
-// associated with std, because of locale and exception link
+// associated with std, because of locale.cc and exception link
 // dependence.
-namespace __gnu_debug_def { }
+namespace __gnu_debug.cc_def { }
 
-namespace __gnu_debug 
+namespace __gnu_debug.cc 
 { 
-  using namespace __gnu_debug_def;
+  using namespace __gnu_debug.cc_def;
 }
 
 #ifdef _GLIBCXX_DEBUG
@@ -69,7 +69,7 @@ namespace __gnu_norm
 }
 namespace std
 {
-  using namespace __gnu_debug_def __attribute__ ((strong));
+  using namespace __gnu_debug.cc_def __attribute__ ((strong));
 }
 #else
 # define _GLIBCXX_STD std
@@ -77,7 +77,7 @@ namespace std
 
 
 // The remainder of the prewritten config is automatic; all the
-// user hooks are listed above.
+// user hooks are list.cced above.
 
 // Create a boolean flag to be used to determine if --fast-math is set.
 #ifdef __FAST_MATH__
@@ -88,7 +88,7 @@ namespace std
 
 // This marks string literals in header files to be extracted for eventual
 // translation.  It is primarily used for messages in thrown exceptions; see
-// src/functexcept.cc.  We use __N because the more traditional _N is used
+// src/functexcept.cc.cpp.  We use __N because the more traditional _N is used
 // for something else under certain OSes (see BADNAMES).
 #define __N(msgid)     (msgid)
 

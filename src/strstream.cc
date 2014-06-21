@@ -49,8 +49,8 @@
 #include <strstream>
 #include <algorithm>
 #include <new>
-#include <stdlib.h>
-#include <string.h>
+#include <mastdlib.h>
+#include <maheap.h>
 #include <limits.h>
 
 namespace std

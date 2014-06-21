@@ -212,13 +212,13 @@ namespace __gnu_debug
         {
 	  _M_variant._M_iterator._M_name = __name;
 	  _M_variant._M_iterator._M_address = &__it;
-	  _M_variant._M_iterator._M_type = &typeid(__it);
+//	  _M_variant._M_iterator._M_type = &typeid(__it);
 	  _M_variant._M_iterator._M_constness =
 	    __is_same<_Safe_iterator<_Iterator, _Sequence>,
 	                         typename _Sequence::iterator>::
 	      value? __mutable_iterator : __const_iterator;
 	  _M_variant._M_iterator._M_sequence = __it._M_get_sequence();
-	  _M_variant._M_iterator._M_seq_type = &typeid(_Sequence);
+//	  _M_variant._M_iterator._M_seq_type = &typeid(_Sequence);
 
 	  if (__it._M_singular())
 	    _M_variant._M_iterator._M_state = __singular;
@@ -241,7 +241,7 @@ namespace __gnu_debug
         {
 	  _M_variant._M_iterator._M_name = __name;
 	  _M_variant._M_iterator._M_address = &__it;
-	  _M_variant._M_iterator._M_type = &typeid(__it);
+//	  _M_variant._M_iterator._M_type = &typeid(__it);
 	  _M_variant._M_iterator._M_constness = __mutable_iterator;
 	  _M_variant._M_iterator._M_state = __it? __unknown_state : __singular;
 	  _M_variant._M_iterator._M_sequence = 0;
@@ -254,7 +254,7 @@ namespace __gnu_debug
         {
 	  _M_variant._M_iterator._M_name = __name;
 	  _M_variant._M_iterator._M_address = &__it;
-	  _M_variant._M_iterator._M_type = &typeid(__it);
+//	  _M_variant._M_iterator._M_type = &typeid(__it);
 	  _M_variant._M_iterator._M_constness = __const_iterator;
 	  _M_variant._M_iterator._M_state = __it? __unknown_state : __singular;
 	  _M_variant._M_iterator._M_sequence = 0;
@@ -267,7 +267,7 @@ namespace __gnu_debug
         {
 	  _M_variant._M_iterator._M_name = __name;
 	  _M_variant._M_iterator._M_address = &__it;
-	  _M_variant._M_iterator._M_type = &typeid(__it);
+//	  _M_variant._M_iterator._M_type = &typeid(__it);
 	  _M_variant._M_iterator._M_constness = __unknown_constness;
 	  _M_variant._M_iterator._M_state =
 	    __gnu_debug::__check_singular(__it)? __singular : __unknown_state;
@@ -283,7 +283,7 @@ namespace __gnu_debug
 	  _M_variant._M_sequence._M_name = __name;
 	  _M_variant._M_sequence._M_address =
 	    static_cast<const _Sequence*>(&__seq);
-	  _M_variant._M_sequence._M_type = &typeid(_Sequence);
+//	  _M_variant._M_sequence._M_type = &typeid(_Sequence);
 	}
 
       template<typename _Sequence>
@@ -292,7 +292,7 @@ namespace __gnu_debug
         {
 	  _M_variant._M_sequence._M_name = __name;
 	  _M_variant._M_sequence._M_address = &__seq;
-	  _M_variant._M_sequence._M_type = &typeid(_Sequence);
+//	  _M_variant._M_sequence._M_type = &typeid(_Sequence);
 	}
 
       void
@@ -350,7 +350,7 @@ namespace __gnu_debug
     _M_message(_Debug_msg_id __id) const;
 
     void
-    _M_error() const;
+    _M_error() const __attribute__((noreturn));
 
   private:
     _Error_formatter(const char* __file, size_t __line)

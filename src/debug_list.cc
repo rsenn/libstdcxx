@@ -1,4 +1,4 @@
-// Debugging mode support code for list -*- C++ -*-
+// Debugging mode support code for list.cc -*- C++ -*-
 
 // Copyright (C) 2004 Free Software Foundation, Inc.
 //

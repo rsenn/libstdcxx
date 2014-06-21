@@ -34,6 +34,8 @@
 #include <locale>
 #include <bits/atomicity.h>
 
+#include "noexcept.icc"
+
 namespace std 
 {
   // Definitions for static const data members of locale.
@@ -51,7 +53,7 @@ namespace std
   locale::_Impl* 		locale::_S_global; 
   const size_t 			locale::_S_categories_size;
 
-#ifdef __GTHREADS
+#if __GTHREADS
   __gthread_once_t 		locale::_S_once = __GTHREAD_ONCE_INIT;
 #endif
 
@@ -125,6 +127,7 @@ namespace std
 	// NB: May be a C-style "LC_ALL" category; convert.
 	switch (__cat)
 	  {
+#ifndef MAPIP
 	  case LC_COLLATE:  
 	    __ret = collate; 
 	    break;
@@ -148,6 +151,7 @@ namespace std
 	  case LC_ALL:      
 	    __ret = all;
 	    break;
+#endif
 	  default:
 	    __throw_runtime_error(__N("locale::_S_normalize_category "
 				  "category not found"));
@@ -161,7 +165,7 @@ namespace std
 
   const char locale::facet::_S_c_name[2] = "C";
 
-#ifdef __GTHREADS
+#if __GTHREADS
   __gthread_once_t locale::facet::_S_once = __GTHREAD_ONCE_INIT;
 #endif
 

@@ -184,8 +184,8 @@ namespace std
   enum _Ios_Seekdir 
     { 
       _S_beg = 0,
-      _S_cur = SEEK_CUR,
-      _S_end = SEEK_END,
+      _S_cur = MA_SEEK_CUR,
+      _S_end = MA_SEEK_END,
       _S_ios_seekdir_end = 1L << 16 
     };
 
@@ -204,7 +204,7 @@ namespace std
 
     // 27.4.2.1.1  Class ios_base::failure
     /// These are thrown to indicate problems.  Doc me.
-    class failure : public exception
+    class failure //: public exception
     {
     public:
       // _GLIBCXX_RESOLVE_LIB_DEFECTS
@@ -395,10 +395,10 @@ namespace std
     static const seekdir beg =		seekdir(0);
 
     /// Request a seek relative to the current position within the sequence.
-    static const seekdir cur =		seekdir(SEEK_CUR);
+    static const seekdir cur =		seekdir(MA_SEEK_CUR);
 
     /// Request a seek relative to the current end of the sequence.
-    static const seekdir end =		seekdir(SEEK_END);
+    static const seekdir end =		seekdir(MA_SEEK_END);
 
 #ifdef _GLIBCXX_DEPRECATED
     // Annex D.6

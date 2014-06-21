@@ -34,6 +34,8 @@
 #include <cxxabi.h>
 # include <cstdio>
 
+#include "noexcept.icc"
+
 using namespace std;
 using namespace abi;
 
@@ -47,8 +49,12 @@ namespace __gnu_cxx
     static bool terminating;
     if (terminating)
       {
+#ifdef MAPIP
+          maPanic(0, "terminate called recursively");
+#else
 	fputs("terminate called recursively\n", stderr);
 	abort ();
+#endif
       }
     terminating = true;
 
@@ -64,14 +70,16 @@ namespace __gnu_cxx
 	  char *dem = 0;
 	  
 	  dem = __cxa_demangle(name, 0, 0, &status);
-
+#ifdef MAPIP
+    maPanic(0, "terminate called after throwing");
+#else
 	  fputs("terminate called after throwing an instance of '", stderr);
 	  if (status == 0)
 	    fputs(dem, stderr);
 	  else
 	    fputs(name, stderr);
 	  fputs("'\n", stderr);
-
+#endif
 	  if (status == 0)
 	    free(dem);
 	}
@@ -79,7 +87,7 @@ namespace __gnu_cxx
 	// If the exception is derived from std::exception, we can
 	// give more information.
 	try { __throw_exception_again; }
-#ifdef __EXCEPTIONS
+#if __EXCEPTIONS
 	catch (exception &exc)
 	  {
 	    char const *w = exc.what();
@@ -91,8 +99,11 @@ namespace __gnu_cxx
 	catch (...) { }
       }
     else
+#ifdef MAPIP
+      maPanic(0, "terminate called without an active exception");
+#else
       fputs("terminate called without an active exception\n", stderr);
-    
     abort();
+#endif
   }
 } // namespace __gnu_cxx

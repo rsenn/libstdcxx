@@ -79,8 +79,8 @@ dnl  - default settings for all AM_CONFITIONAL test variables
 dnl  - lots of tools, like CC and CXX
 dnl
 AC_DEFUN([GLIBCXX_CONFIGURE], [
-  # Keep these sync'd with the list in Makefile.am.  The first provides an
-  # expandable list at autoconf time; the second provides an expandable list
+  # Keep these sync'd with the list.cc in Makefile.am.  The first provides an
+  # expandable list.cc at autoconf time; the second provides an expandable list.cc
   # (i.e., shell variable) at configure time.
   m4_define([glibcxx_SUBDIRS],[include libmath libsupc++ src po testsuite])
   SUBDIRS='glibcxx_SUBDIRS'
@@ -117,7 +117,7 @@ AC_DEFUN([GLIBCXX_CONFIGURE], [
   # we not cache the value of CXX that we "discover" here, because it's set
   # to something unique for us and libjava.  Other target libraries need to
   # find CXX for themselves.  We yank the rug out from under the normal AC_*
-  # process by sneakily renaming the cache variable.  This also lets us debug
+  # process by sneakily renaming the cache variable.  This also lets us debug.cc
   # the value of "our" CXX in postmortems.
   #
   # We must also force CXX to /not/ be a precious variable, otherwise the
@@ -146,7 +146,7 @@ AC_DEFUN([GLIBCXX_CONFIGURE], [
   gcc_version=`$CXX -dumpversion`
   AC_MSG_RESULT($gcc_version)
 
-  # Will set LN_S to either 'ln -s', 'ln', or 'cp -p' (if linking isn't
+  # Will set LN_S to either 'cp -f', 'ln', or 'cp -p' (if linking isn't
   # available).  Uncomment the next line to force a particular method.
   AC_PROG_LN_S
   #LN_S='cp -p'
@@ -163,7 +163,7 @@ AC_DEFUN([GLIBCXX_CONFIGURE], [
   ## other macros from doing the same.  This should be automated.)  -pme
   need_libmath=no
   enable_wchar_t=no
-  #enable_libstdcxx_debug=no
+  #enable_libstdcxx_debug.cc=no
   #enable_libstdcxx_pch=no
   #enable_cheaders=c
   #c_compatibility=no
@@ -191,7 +191,7 @@ dnl  WERROR='-Werror' if requested and possible; g++'s that lack the
 dnl   new inlining code or the new system_header pragma will die on -Werror.
 dnl   Leave it out by default and use maint-mode to use it.
 dnl  SECTION_FLAGS='-ffunction-sections -fdata-sections' if
-dnl   compiler supports it and the user has not requested debug mode.
+dnl   compiler supports it and the user has not requested debug.cc mode.
 dnl
 AC_DEFUN([GLIBCXX_CHECK_COMPILER_FEATURES], [
   # All these tests are for C++; save the language and the compiler flags.
@@ -351,15 +351,15 @@ AC_DEFUN([GLIBCXX_CHECK_WCHAR_T_SUPPORT], [
 
   # Sanity check for existence of ISO C99 headers for extended encoding.
   AC_CHECK_HEADERS(wchar.h, ac_has_wchar_h=yes, ac_has_wchar_h=no)
-  AC_CHECK_HEADERS(wctype.h, ac_has_wctype_h=yes, ac_has_wctype_h=no)
+  AC_CHECK_HEADERS(wctype.cc.h, ac_has_wctype.cc_h=yes, ac_has_wctype.cc_h=no)
 
   # Only continue checking if the ISO C99 headers exist and support is on.
   if test x"$ac_has_wchar_h" = xyes &&
-     test x"$ac_has_wctype_h" = xyes &&
+     test x"$ac_has_wctype.cc_h" = xyes &&
      test x"$enable_c_mbchar" != xno; then
 
     # Test wchar.h for WCHAR_MIN, WCHAR_MAX, which is needed before
-    # numeric_limits can instantiate type_traits<wchar_t>
+    # numeric_limits.cc can instantiate type_traits<wchar_t>
     AC_MSG_CHECKING([for WCHAR_MIN and WCHAR_MAX])
     AC_TRY_COMPILE([#include <wchar.h>],
     [int i = WCHAR_MIN; int j = WCHAR_MAX;],
@@ -392,7 +392,7 @@ AC_DEFUN([GLIBCXX_CHECK_WCHAR_T_SUPPORT], [
 
     # Checks for wide character functions that are not required
     # for basic wchar_t support.  Don't disable support if they are missing.
-    # Injection of these is wrapped with guard macros.
+    # Injection of these is wrapped with guard.cc macros.
     AC_CHECK_FUNCS([vfwscanf vswscanf vwscanf wcstof iswblank],[],[])
 
     AC_MSG_CHECKING([for ISO C99 wchar_t support])
@@ -451,7 +451,7 @@ dnl Check for headers for, and arguments to, the setrlimit() function.
 dnl Used only in testsuite_hooks.h.  Called from GLIBCXX_CONFIGURE_TESTSUITE.
 dnl
 dnl Defines:
-dnl  _GLIBCXX_RES_LIMITS if we can set artificial resource limits 
+dnl  _GLIBCXX_RES_LIMITS if we can set artificial resource limits.cc 
 dnl  various HAVE_LIMIT_* for individual limit names
 dnl
 AC_DEFUN([GLIBCXX_CHECK_SETRLIMIT_ancilliary], [
@@ -494,14 +494,14 @@ AC_DEFUN([GLIBCXX_CHECK_SETRLIMIT], [
     ])
   fi
 
-  AC_MSG_CHECKING([for testsuite resource limits support])
+  AC_MSG_CHECKING([for testsuite resource limits.cc support])
   if test $setrlimit_have_headers = yes && test $ac_setrlimit = yes; then
-    ac_res_limits=yes
+    ac_res_limits.cc=yes
     AC_DEFINE(_GLIBCXX_RES_LIMITS)
   else
-    ac_res_limits=no
+    ac_res_limits.cc=no
   fi
-  AC_MSG_RESULT($ac_res_limits)
+  AC_MSG_RESULT($ac_res_limits.cc)
 ])
 
 
@@ -562,7 +562,7 @@ AC_DEFUN([GLIBCXX_CHECK_WRITEV], [
   AC_CACHE_VAL(glibcxx_cv_WRITEV, [
     AC_TRY_LINK(
       [#include <sys/uio.h>],
-      [struct iovec iov[2];
+      [struct iovec.cc iov[2];
        writev(0, iov, 0);],
       [glibcxx_cv_WRITEV=yes],
       [glibcxx_cv_WRITEV=no])
@@ -622,7 +622,7 @@ AC_DEFUN([GLIBCXX_CHECK_LFS], [
 dnl
 dnl Check for whether a fully dynamic basic_string implementation should
 dnl be turned on, that does not put empty objects in per-process static
-dnl memory (mostly useful together with shared memory allocators, see PR
+dnl memory (mostly useful together with shared memory allocator.ccs, see PR
 dnl libstdc++/16612 for details).
 dnl
 dnl --enable-fully-dynamic-string defines _GLIBCXX_FULLY_DYNAMIC_STRING
@@ -654,7 +654,7 @@ AC_DEFUN([GLIBCXX_CONFIGURE_TESTSUITE], [
     # Do checks for resource limit functions.
     GLIBCXX_CHECK_SETRLIMIT
 
-    # Look for setenv, so that extended locale tests can be performed.
+    # Look for setenv, so that extended locale.cc tests can be performed.
     GLIBCXX_CHECK_STDLIB_DECL_AND_LINKAGE_3(setenv)
 
     if test $enable_symvers = no; then
@@ -902,25 +902,25 @@ AC_DEFUN([GLIBCXX_ENABLE_C99], [
   AC_TRY_COMPILE([#include <stdio.h>
                   #include <stdarg.h>
                   void foo(char* fmt, ...)
-                  {va_list args; va_start(args, fmt);
+                  {va_list.cc args; va_start(args, fmt);
                   vfscanf(stderr, "%i", args);}],
                   [],, [ac_c99_stdio=no])
   AC_TRY_COMPILE([#include <stdio.h>
                   #include <stdarg.h>
                   void foo(char* fmt, ...)
-                  {va_list args; va_start(args, fmt);
+                  {va_list.cc args; va_start(args, fmt);
                   vscanf("%i", args);}],
                   [],, [ac_c99_stdio=no])
   AC_TRY_COMPILE([#include <stdio.h>
                   #include <stdarg.h>
                   void foo(char* fmt, ...)
-                  {va_list args; va_start(args, fmt);
+                  {va_list.cc args; va_start(args, fmt);
                   vsnprintf(fmt, 0, "%i", args);}],
                   [],, [ac_c99_stdio=no])
   AC_TRY_COMPILE([#include <stdio.h>
                   #include <stdarg.h>
                   void foo(char* fmt, ...)
-                  {va_list args; va_start(args, fmt);
+                  {va_list.cc args; va_start(args, fmt);
                   vsscanf(fmt, "%i", args);}],
                   [],, [ac_c99_stdio=no])
   AC_MSG_RESULT($ac_c99_stdio)
@@ -1006,30 +1006,30 @@ AC_DEFUN([GLIBCXX_ENABLE_CHEADERS], [
 
 
 dnl
-dnl Check for which locale library to use.  The choice is mapped to
-dnl a subdirectory of config/locale.
+dnl Check for which locale.cc library to use.  The choice is mapped to
+dnl a subdirectory of config/locale.cc.
 dnl
 dnl Default is generic.
 dnl
 AC_DEFUN([GLIBCXX_ENABLE_CLOCALE], [
-  AC_MSG_CHECKING([for C locale to use])
-  GLIBCXX_ENABLE(clocale,auto,[@<:@=MODEL@:>@],
-    [use MODEL for target locale package],
+  AC_MSG_CHECKING([for C locale.cc to use])
+  GLIBCXX_ENABLE(clocale.cc,auto,[@<:@=MODEL@:>@],
+    [use MODEL for target locale.cc package],
     [permit generic|gnu|ieee_1003.1-2001|yes|no|auto])
   
   # If they didn't use this option switch, or if they specified --enable
   # with no specific model, we'll have to look for one.  If they
   # specified --disable (???), do likewise.
-  if test $enable_clocale = no || test $enable_clocale = yes; then
-     enable_clocale=auto
+  if test $enable_clocale.cc = no || test $enable_clocale.cc = yes; then
+     enable_clocale.cc=auto
   fi
 
   # Either a known package, or "auto"
-  enable_clocale_flag=$enable_clocale
+  enable_clocale.cc_flag=$enable_clocale.cc
 
-  # Probe for locale support if no specific model is specified.
+  # Probe for locale.cc support if no specific model is specified.
   # Default to "generic".
-  if test $enable_clocale_flag = auto; then
+  if test $enable_clocale.cc_flag = auto; then
     case x${target_os} in
       xlinux* | xgnu* | xkfreebsd*-gnu | xknetbsd*-gnu)
         AC_EGREP_CPP([_GLIBCXX_ok], [
@@ -1037,17 +1037,17 @@ AC_DEFUN([GLIBCXX_ENABLE_CLOCALE], [
         #if __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)
           _GLIBCXX_ok
         #endif
-        ], enable_clocale_flag=gnu, enable_clocale_flag=generic)
+        ], enable_clocale.cc_flag=gnu, enable_clocale.cc_flag=generic)
 
         # Test for bugs early in glibc-2.2.x series
-          if test x$enable_clocale_flag = xgnu; then
+          if test x$enable_clocale.cc_flag = xgnu; then
           AC_TRY_RUN([
           #define _GNU_SOURCE 1
-          #include <locale.h>
+          #include <locale.cc.h>
           #include <string.h>
           #if __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 2)
-          extern __typeof(newlocale) __newlocale;
-          extern __typeof(duplocale) __duplocale;
+          extern __typeof(newlocale.cc) __newlocale.cc;
+          extern __typeof(duplocale.cc) __duplocale.cc;
           extern __typeof(strcoll_l) __strcoll_l;
           #endif
           int main()
@@ -1056,23 +1056,23 @@ AC_DEFUN([GLIBCXX_ENABLE_CLOCALE], [
               const char __two[] = "Äuglein";
               int i;
               int j;
-              __locale_t        loc;
-               __locale_t        loc_dup;
-              loc = __newlocale(1 << LC_ALL, "de_DE", 0);
-              loc_dup = __duplocale(loc);
+              __locale.cc_t        loc;
+               __locale.cc_t        loc_dup;
+              loc = __newlocale.cc(1 << LC_ALL, "de_DE", 0);
+              loc_dup = __duplocale.cc(loc);
               i = __strcoll_l(__one, __two, loc);
               j = __strcoll_l(__one, __two, loc_dup);
               return 0;
           }
           ],
-          [enable_clocale_flag=gnu],[enable_clocale_flag=generic],
-          [enable_clocale_flag=generic])
+          [enable_clocale.cc_flag=gnu],[enable_clocale.cc_flag=generic],
+          [enable_clocale.cc_flag=generic])
           fi
 
         # ... at some point put __strxfrm_l tests in as well.
         ;;
       *)
-        enable_clocale_flag=generic
+        enable_clocale.cc_flag=generic
         ;;
     esac
   fi
@@ -1086,24 +1086,24 @@ AC_DEFUN([GLIBCXX_ENABLE_CLOCALE], [
     [],
     [enable_nls=yes])
 
-  # Set configure bits for specified locale package
-  case ${enable_clocale_flag} in
+  # Set configure bits for specified locale.cc package
+  case ${enable_clocale.cc_flag} in
     generic)
       AC_MSG_RESULT(generic)
 
-      CLOCALE_H=config/locale/generic/c_locale.h
-      CLOCALE_CC=config/locale/generic/c_locale.cc
-      CCODECVT_H=config/locale/generic/codecvt_specializations.h
-      CCODECVT_CC=config/locale/generic/codecvt_members.cc
-      CCOLLATE_CC=config/locale/generic/collate_members.cc
-      CCTYPE_CC=config/locale/generic/ctype_members.cc
-      CMESSAGES_H=config/locale/generic/messages_members.h
-      CMESSAGES_CC=config/locale/generic/messages_members.cc
-      CMONEY_CC=config/locale/generic/monetary_members.cc
-      CNUMERIC_CC=config/locale/generic/numeric_members.cc
-      CTIME_H=config/locale/generic/time_members.h
-      CTIME_CC=config/locale/generic/time_members.cc
-      CLOCALE_INTERNAL_H=config/locale/generic/c++locale_internal.h
+      CLOCALE_H=config/locale.cc/generic/c_locale.cc.h
+      CLOCALE_CC=config/locale.cc/generic/c_locale.cc.cpp
+      CCODECVT_H=config/locale.cc/generic/codecvt.cc_specializations.h
+      CCODECVT_CC=config/locale.cc/generic/codecvt.cc_members.cc
+      CCOLLATE_CC=config/locale.cc/generic/collate_members.cc
+      CCTYPE_CC=config/locale.cc/generic/ctype.cc_members.cc
+      CMESSAGES_H=config/locale.cc/generic/messages_members.h
+      CMESSAGES_CC=config/locale.cc/generic/messages_members.cc
+      CMONEY_CC=config/locale.cc/generic/monetary_members.cc
+      CNUMERIC_CC=config/locale.cc/generic/numeric_members.cc
+      CTIME_H=config/locale.cc/generic/time_members.h
+      CTIME_CC=config/locale.cc/generic/time_members.cc
+      CLOCALE_INTERNAL_H=config/locale.cc/generic/c++locale.cc_internal.h
       ;;
     gnu)
       AC_MSG_RESULT(gnu)
@@ -1126,43 +1126,43 @@ AC_DEFUN([GLIBCXX_ENABLE_CLOCALE], [
       AC_SUBST(glibcxx_MOFILES)
       AC_SUBST(glibcxx_POFILES)
 
-      CLOCALE_H=config/locale/gnu/c_locale.h
-      CLOCALE_CC=config/locale/gnu/c_locale.cc
-      CCODECVT_H=config/locale/ieee_1003.1-2001/codecvt_specializations.h
-      CCODECVT_CC=config/locale/gnu/codecvt_members.cc
-      CCOLLATE_CC=config/locale/gnu/collate_members.cc
-      CCTYPE_CC=config/locale/gnu/ctype_members.cc
-      CMESSAGES_H=config/locale/gnu/messages_members.h
-      CMESSAGES_CC=config/locale/gnu/messages_members.cc
-      CMONEY_CC=config/locale/gnu/monetary_members.cc
-      CNUMERIC_CC=config/locale/gnu/numeric_members.cc
-      CTIME_H=config/locale/gnu/time_members.h
-      CTIME_CC=config/locale/gnu/time_members.cc
-      CLOCALE_INTERNAL_H=config/locale/gnu/c++locale_internal.h
+      CLOCALE_H=config/locale.cc/gnu/c_locale.cc.h
+      CLOCALE_CC=config/locale.cc/gnu/c_locale.cc.cpp
+      CCODECVT_H=config/locale.cc/ieee_1003.1-2001/codecvt.cc_specializations.h
+      CCODECVT_CC=config/locale.cc/gnu/codecvt.cc_members.cc
+      CCOLLATE_CC=config/locale.cc/gnu/collate_members.cc
+      CCTYPE_CC=config/locale.cc/gnu/ctype.cc_members.cc
+      CMESSAGES_H=config/locale.cc/gnu/messages_members.h
+      CMESSAGES_CC=config/locale.cc/gnu/messages_members.cc
+      CMONEY_CC=config/locale.cc/gnu/monetary_members.cc
+      CNUMERIC_CC=config/locale.cc/gnu/numeric_members.cc
+      CTIME_H=config/locale.cc/gnu/time_members.h
+      CTIME_CC=config/locale.cc/gnu/time_members.cc
+      CLOCALE_INTERNAL_H=config/locale.cc/gnu/c++locale.cc_internal.h
       ;;
     ieee_1003.1-2001)
       AC_MSG_RESULT(IEEE 1003.1)
 
-      CLOCALE_H=config/locale/ieee_1003.1-2001/c_locale.h
-      CLOCALE_CC=config/locale/ieee_1003.1-2001/c_locale.cc
-      CCODECVT_H=config/locale/ieee_1003.1-2001/codecvt_specializations.h
-      CCODECVT_CC=config/locale/generic/codecvt_members.cc
-      CCOLLATE_CC=config/locale/generic/collate_members.cc
-      CCTYPE_CC=config/locale/generic/ctype_members.cc
-      CMESSAGES_H=config/locale/ieee_1003.1-2001/messages_members.h
-      CMESSAGES_CC=config/locale/ieee_1003.1-2001/messages_members.cc
-      CMONEY_CC=config/locale/generic/monetary_members.cc
-      CNUMERIC_CC=config/locale/generic/numeric_members.cc
-      CTIME_H=config/locale/generic/time_members.h
-      CTIME_CC=config/locale/generic/time_members.cc
-      CLOCALE_INTERNAL_H=config/locale/generic/c++locale_internal.h
+      CLOCALE_H=config/locale.cc/ieee_1003.1-2001/c_locale.cc.h
+      CLOCALE_CC=config/locale.cc/ieee_1003.1-2001/c_locale.cc.cpp
+      CCODECVT_H=config/locale.cc/ieee_1003.1-2001/codecvt.cc_specializations.h
+      CCODECVT_CC=config/locale.cc/generic/codecvt.cc_members.cc
+      CCOLLATE_CC=config/locale.cc/generic/collate_members.cc
+      CCTYPE_CC=config/locale.cc/generic/ctype.cc_members.cc
+      CMESSAGES_H=config/locale.cc/ieee_1003.1-2001/messages_members.h
+      CMESSAGES_CC=config/locale.cc/ieee_1003.1-2001/messages_members.cc
+      CMONEY_CC=config/locale.cc/generic/monetary_members.cc
+      CNUMERIC_CC=config/locale.cc/generic/numeric_members.cc
+      CTIME_H=config/locale.cc/generic/time_members.h
+      CTIME_CC=config/locale.cc/generic/time_members.cc
+      CLOCALE_INTERNAL_H=config/locale.cc/generic/c++locale.cc_internal.h
       ;;
   esac
 
-  # This is where the testsuite looks for locale catalogs, using the
+  # This is where the testsuite looks for locale.cc catalogs, using the
   # -DLOCALEDIR define during testsuite compilation.
-  glibcxx_localedir=${glibcxx_builddir}/po/share/locale
-  AC_SUBST(glibcxx_localedir)
+  glibcxx_locale.ccdir=${glibcxx_builddir}/po/share/locale.cc
+  AC_SUBST(glibcxx_locale.ccdir)
 
   # A standalone libintl (e.g., GNU libintl) may be in use.
   if test $USE_NLS = yes; then
@@ -1191,58 +1191,58 @@ AC_DEFUN([GLIBCXX_ENABLE_CLOCALE], [
 
 
 dnl
-dnl Check for which std::allocator base class to use.  The choice is
+dnl Check for which std::allocator.cc base class to use.  The choice is
 dnl mapped from a subdirectory of include/ext.
 dnl
 dnl Default is new.
 dnl
 AC_DEFUN([GLIBCXX_ENABLE_ALLOCATOR], [
-  AC_MSG_CHECKING([for std::allocator base class to use])
-  GLIBCXX_ENABLE(libstdcxx-allocator,auto,[=KIND],
-    [use KIND for target std::allocator base],
+  AC_MSG_CHECKING([for std::allocator.cc base class to use])
+  GLIBCXX_ENABLE(libstdcxx-allocator.cc,auto,[=KIND],
+    [use KIND for target std::allocator.cc base],
     [permit new|malloc|mt|bitmap|pool|yes|no|auto])
   # If they didn't use this option switch, or if they specified --enable
   # with no specific model, we'll have to look for one.  If they
   # specified --disable (???), do likewise.
-  if test $enable_libstdcxx_allocator = no || test $enable_libstdcxx_allocator = yes; then
-     enable_libstdcxx_allocator=auto
+  if test $enable_libstdcxx_allocator.cc = no || test $enable_libstdcxx_allocator.cc = yes; then
+     enable_libstdcxx_allocator.cc=auto
   fi
 
   # Either a known package, or "auto"
-  enable_libstdcxx_allocator_flag=$enable_libstdcxx_allocator
+  enable_libstdcxx_allocator.cc_flag=$enable_libstdcxx_allocator.cc
 
   # Probe for host-specific support if no specific model is specified.
   # Default to "new".
-  if test $enable_libstdcxx_allocator_flag = auto; then
+  if test $enable_libstdcxx_allocator.cc_flag = auto; then
     case ${target_os} in
       *)
-        enable_libstdcxx_allocator_flag=new
+        enable_libstdcxx_allocator.cc_flag=new
         ;;
     esac
   fi
-  AC_MSG_RESULT($enable_libstdcxx_allocator_flag)
+  AC_MSG_RESULT($enable_libstdcxx_allocator.cc_flag)
   
 
-  # Set configure bits for specified locale package
-  case ${enable_libstdcxx_allocator_flag} in
+  # Set configure bits for specified locale.cc package
+  case ${enable_libstdcxx_allocator.cc_flag} in
     bitmap)
-      ALLOCATOR_H=config/allocator/bitmap_allocator_base.h
-      ALLOCATOR_NAME=__gnu_cxx::bitmap_allocator
+      ALLOCATOR_H=config/allocator.cc/bitmap_allocator.cc_base.h
+      ALLOCATOR_NAME=__gnu_cxx::bitmap_allocator.cc
       ;;
     malloc)
-      ALLOCATOR_H=config/allocator/malloc_allocator_base.h
-      ALLOCATOR_NAME=__gnu_cxx::malloc_allocator
+      ALLOCATOR_H=config/allocator.cc/malloc_allocator.cc_base.h
+      ALLOCATOR_NAME=__gnu_cxx::malloc_allocator.cc
       ;;
     mt)
-      ALLOCATOR_H=config/allocator/mt_allocator_base.h
+      ALLOCATOR_H=config/allocator.cc/mt_allocator.cc_base.h
       ALLOCATOR_NAME=__gnu_cxx::__mt_alloc
       ;;
     new)
-      ALLOCATOR_H=config/allocator/new_allocator_base.h
-      ALLOCATOR_NAME=__gnu_cxx::new_allocator
+      ALLOCATOR_H=config/allocator.cc/new_allocator.cc_base.h
+      ALLOCATOR_NAME=__gnu_cxx::new_allocator.cc
       ;;
     pool)
-      ALLOCATOR_H=config/allocator/pool_allocator_base.h
+      ALLOCATOR_H=config/allocator.cc/pool_allocator.cc_base.h
       ALLOCATOR_NAME=__gnu_cxx::__pool_alloc
       ;;	
   esac
@@ -1354,52 +1354,52 @@ AC_DEFUN([GLIBCXX_ENABLE_C_MBCHAR], [
 
 
 dnl
-dnl Check to see if debugging libraries are to be built.
+dnl Check to see if debug.ccging libraries are to be built.
 dnl
-dnl --enable-libstdcxx-debug
-dnl builds a separate set of debugging libraries in addition to the
+dnl --enable-libstdcxx-debug.cc
+dnl builds a separate set of debug.ccging libraries in addition to the
 dnl normal (shared, static) libstdc++ binaries.
 dnl
-dnl --disable-libstdcxx-debug
-dnl builds only one (non-debug) version of libstdc++.
+dnl --disable-libstdcxx-debug.cc
+dnl builds only one (non-debug.cc) version of libstdc++.
 dnl
-dnl --enable-libstdcxx-debug-flags=FLAGS
-dnl iff --enable-debug == yes, then use FLAGS to build the debug library.
+dnl --enable-libstdcxx-debug.cc-flags=FLAGS
+dnl iff --enable-debug.cc == yes, then use FLAGS to build the debug.cc library.
 dnl
 dnl  +  Usage:  GLIBCXX_ENABLE_DEBUG[(DEFAULT)]
 dnl       Where DEFAULT is either `yes' or `no'.
 dnl
 AC_DEFUN([GLIBCXX_ENABLE_DEBUG], [
-  AC_MSG_CHECKING([for additional debug build])
-  GLIBCXX_ENABLE(libstdcxx-debug,$1,,[build extra debug library])
-  AC_MSG_RESULT($enable_libstdcxx_debug)
-  GLIBCXX_CONDITIONAL(GLIBCXX_BUILD_DEBUG, test $enable_libstdcxx_debug = yes)
+  AC_MSG_CHECKING([for additional debug.cc build])
+  GLIBCXX_ENABLE(libstdcxx-debug.cc,$1,,[build extra debug.cc library])
+  AC_MSG_RESULT($enable_libstdcxx_debug.cc)
+  GLIBCXX_CONDITIONAL(GLIBCXX_BUILD_DEBUG, test $enable_libstdcxx_debug.cc = yes)
 ])
 
 
 dnl
-dnl Check for explicit debug flags.
+dnl Check for explicit debug.cc flags.
 dnl
-dnl --enable-libstdcxx-debug-flags='-O1'
+dnl --enable-libstdcxx-debug.cc-flags='-O1'
 dnl is a general method for passing flags to be used when
-dnl building debug libraries with --enable-debug.
+dnl building debug.cc libraries with --enable-debug.cc.
 dnl
-dnl --disable-libstdcxx-debug-flags does nothing.
+dnl --disable-libstdcxx-debug.cc-flags does nothing.
 dnl  +  Usage:  GLIBCXX_ENABLE_DEBUG_FLAGS(default flags)
 dnl       If "default flags" is an empty string, the effect is the same
 dnl       as --disable or --enable=no.
 dnl
 AC_DEFUN([GLIBCXX_ENABLE_DEBUG_FLAGS], [
-  GLIBCXX_ENABLE(libstdcxx-debug-flags,[$1],[=FLAGS],
-    [pass compiler FLAGS when building debug library],
-    [case "x$enable_libstdcxx_debug_flags" in
-      xno | x)    enable_libstdcxx_debug_flags= ;;
+  GLIBCXX_ENABLE(libstdcxx-debug.cc-flags,[$1],[=FLAGS],
+    [pass compiler FLAGS when building debug.cc library],
+    [case "x$enable_libstdcxx_debug.cc_flags" in
+      xno | x)    enable_libstdcxx_debug.cc_flags= ;;
       x-*)        ;;
       *)          AC_MSG_ERROR(_g_switch needs compiler flags as arguments) ;;
      esac])
 
   # Option parsed, now set things appropriately
-  DEBUG_FLAGS="$enable_libstdcxx_debug_flags"
+  DEBUG_FLAGS="$enable_libstdcxx_debug.cc_flags"
   AC_SUBST(DEBUG_FLAGS)
 
   AC_MSG_NOTICE([Debug build flags set to $DEBUG_FLAGS])
@@ -1444,7 +1444,7 @@ AC_DEFUN([GLIBCXX_ENABLE_HOSTED], [
 dnl
 dnl Check for template specializations for the 'long long' type extension.
 dnl The result determines only whether 'long long' I/O is enabled; things
-dnl like numeric_limits<> specializations are always available.
+dnl like numeric_limits.cc<> specializations are always available.
 dnl
 dnl --enable-long-long defines _GLIBCXX_USE_LONG_LONG
 dnl --disable-long-long leaves _GLIBCXX_USE_LONG_LONG undefined
@@ -1536,7 +1536,7 @@ AC_DEFUN([GLIBCXX_ENABLE_SJLJ_EXCEPTIONS], [
   if test $enable_sjlj_exceptions = auto; then
     # Botheration.  Now we've got to detect the exception model.  Link tests
     # against libgcc.a are problematic since we've not been given proper -L
-    # bits for single-tree newlib and libgloss.
+    # bits for single-tree.cc newlib and libgloss.
     #
     # Fake what AC_TRY_COMPILE does.  XXX Look at redoing this new-style.
     cat > conftest.$ac_ext << EOF
@@ -1729,7 +1729,7 @@ AC_DEFUN([GLIBCXX_ENABLE_THREADS], [
 ])
 
 
-# Check whether LC_MESSAGES is available in <locale.h>.
+# Check whether LC_MESSAGES is available in <locale.cc.h>.
 # Ulrich Drepper <drepper@cygnus.com>, 1995.
 #
 # This file file be copied and used freely without restrictions.  It can
@@ -1739,9 +1739,9 @@ AC_DEFUN([GLIBCXX_ENABLE_THREADS], [
 
 # serial 1
 AC_DEFUN([AC_LC_MESSAGES], [
-  AC_CHECK_HEADER(locale.h, [
+  AC_CHECK_HEADER(locale.cc.h, [
     AC_CACHE_CHECK([for LC_MESSAGES], ac_cv_val_LC_MESSAGES,
-      [AC_TRY_LINK([#include <locale.h>], [return LC_MESSAGES],
+      [AC_TRY_LINK([#include <locale.cc.h>], [return LC_MESSAGES],
        ac_cv_val_LC_MESSAGES=yes, ac_cv_val_LC_MESSAGES=no)])
     if test $ac_cv_val_LC_MESSAGES = yes; then
       AC_DEFINE(HAVE_LC_MESSAGES)

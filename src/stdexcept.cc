@@ -75,4 +75,3 @@ namespace std
   underflow_error::underflow_error(const string& __arg)
   : runtime_error(__arg) { }
 } // namespace std
-

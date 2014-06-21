@@ -48,7 +48,7 @@
 #ifndef __SGI_STL_STRSTREAM
 #define __SGI_STL_STRSTREAM
 
-#include "backward_warning.h"
+#include "backward/backward_warning.h"
 #include <iosfwd>
 #include <ios>
 #include <istream>

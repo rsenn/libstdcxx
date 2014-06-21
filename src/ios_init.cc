@@ -87,6 +87,7 @@ namespace std
 	// Standard streams default to synced with "C" operations.
 	_S_synced_with_stdio = true;
 
+#ifndef MAPIP
 	new (&buf_cout_sync) stdio_sync_filebuf<char>(stdout);
 	new (&buf_cin_sync) stdio_sync_filebuf<char>(stdin);
 	new (&buf_cerr_sync) stdio_sync_filebuf<char>(stderr);
@@ -99,6 +100,7 @@ namespace std
 	new (&clog) ostream(&buf_cerr_sync);
 	cin.tie(&cout);
 	cerr.flags(ios_base::unitbuf);
+#endif
 	
 #ifdef _GLIBCXX_USE_WCHAR_T
 	new (&buf_wcout_sync) stdio_sync_filebuf<wchar_t>(stdout);
@@ -176,6 +178,7 @@ namespace std
 	// Create stream buffers for the standard streams and use
 	// those buffers without destroying and recreating the
 	// streams.
+#ifndef MAPIP
 	new (&buf_cout) stdio_filebuf<char>(stdout, ios_base::out);
 	new (&buf_cin) stdio_filebuf<char>(stdin, ios_base::in);
 	new (&buf_cerr) stdio_filebuf<char>(stderr, ios_base::out);
@@ -183,6 +186,7 @@ namespace std
 	cin.rdbuf(&buf_cin);
 	cerr.rdbuf(&buf_cerr);
 	clog.rdbuf(&buf_cerr);
+#endif  
     
 #ifdef _GLIBCXX_USE_WCHAR_T
 	new (&buf_wcout) stdio_filebuf<wchar_t>(stdout, ios_base::out);

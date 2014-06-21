@@ -48,7 +48,7 @@
 
 #include <cstddef>
 
-#include <time.h>
+#include <matime.h>
 
 // Get rid of those macros defined in <time.h> in lieu of real functions.
 #undef clock

@@ -34,7 +34,7 @@
 // Information as gleaned from target/h/ctype.h
 
 // ctype bits to be inlined go here. Non-inlinable (ie virtual do_*)
-// functions go in ctype.cc
+// functions go in ctype.cpp
 
   bool
   ctype<char>::

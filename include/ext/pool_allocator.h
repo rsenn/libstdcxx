@@ -198,9 +198,9 @@ namespace __gnu_cxx
 	      // to efficiently support threading found in basic_string.h.
 	      if (_S_force_new == 0)
 		{
-		  if (getenv("GLIBCXX_FORCE_NEW"))
+/*  if (0) //getenv("GLIBCXX_FORCE_NEW"))
 		    __atomic_add(&_S_force_new, 1);
-		  else
+		  else*/
 		    __atomic_add(&_S_force_new, -1);
 		}
 

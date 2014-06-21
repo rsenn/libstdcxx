@@ -257,7 +257,7 @@ namespace __gnu_debug
   _Error_formatter::_Parameter::
   _M_print_field(const _Error_formatter* __formatter, const char* __name) const
   {
-    assert(this->_M_kind != _Parameter::__unused_param);
+    MAASSERT(this->_M_kind != _Parameter::__unused_param);
     const int __bufsize = 64;
     char __buf[__bufsize];
     
@@ -265,7 +265,7 @@ namespace __gnu_debug
       {
 	if (strcmp(__name, "name") == 0)
 	  {
-	    assert(_M_variant._M_iterator._M_name);
+	    MAASSERT(_M_variant._M_iterator._M_name);
 	    __formatter->_M_print_word(_M_variant._M_iterator._M_name);
 	  }
 	else if (strcmp(__name, "address") == 0)
@@ -276,7 +276,7 @@ namespace __gnu_debug
 	  }
 	else if (strcmp(__name, "type") == 0)
 	  {
-	    assert(_M_variant._M_iterator._M_type);
+	    MAASSERT(_M_variant._M_iterator._M_type);
 	    // TBD: demangle!
 	    __formatter->_M_print_word(_M_variant._M_iterator._M_type->name());
 	  }
@@ -304,7 +304,7 @@ namespace __gnu_debug
 	  }
 	else if (strcmp(__name, "sequence") == 0)
 	  {
-	    assert(_M_variant._M_iterator._M_sequence);
+	    MAASSERT(_M_variant._M_iterator._M_sequence);
 	    __formatter->_M_format_word(__buf, __bufsize, "%p", 
 					_M_variant._M_iterator._M_sequence);
 	    __formatter->_M_print_word(__buf);
@@ -312,22 +312,22 @@ namespace __gnu_debug
 	else if (strcmp(__name, "seq_type") == 0)
 	  {
 	    // TBD: demangle!
-	    assert(_M_variant._M_iterator._M_seq_type);
+	    MAASSERT(_M_variant._M_iterator._M_seq_type);
 	    __formatter->_M_print_word(_M_variant._M_iterator._M_seq_type->name());
 	  }
 	else
-	  assert(false);
+	  MAASSERT(false);
       }
     else if (_M_kind == __sequence)
       {
 	if (strcmp(__name, "name") == 0)
 	  {
-	    assert(_M_variant._M_sequence._M_name);
+	    MAASSERT(_M_variant._M_sequence._M_name);
 	    __formatter->_M_print_word(_M_variant._M_sequence._M_name);
 	  }
 	else if (strcmp(__name, "address") == 0)
 	  {
-	    assert(_M_variant._M_sequence._M_address);
+	    MAASSERT(_M_variant._M_sequence._M_address);
 	    __formatter->_M_format_word(__buf, __bufsize, "%p", 
 					_M_variant._M_sequence._M_address);
 	    __formatter->_M_print_word(__buf);
@@ -335,35 +335,35 @@ namespace __gnu_debug
 	else if (strcmp(__name, "type") == 0)
 	  {
 	    // TBD: demangle!
-	    assert(_M_variant._M_sequence._M_type);
+	    MAASSERT(_M_variant._M_sequence._M_type);
 	    __formatter->_M_print_word(_M_variant._M_sequence._M_type->name());
 	  }
 	else
-	  assert(false);
+	  MAASSERT(false);
       }
     else if (_M_kind == __integer)
       {
 	if (strcmp(__name, "name") == 0)
 	  {
-	    assert(_M_variant._M_integer._M_name);
+	    MAASSERT(_M_variant._M_integer._M_name);
 	    __formatter->_M_print_word(_M_variant._M_integer._M_name);
 	  }
 	else
-	assert(false);
+	MAASSERT(false);
       }
     else if (_M_kind == __string)
       {
 	if (strcmp(__name, "name") == 0)
 	  {
-	    assert(_M_variant._M_string._M_name);
+	    MAASSERT(_M_variant._M_string._M_name);
 	    __formatter->_M_print_word(_M_variant._M_string._M_name);
 	  }
 	else
-	  assert(false);
+	  MAASSERT(false);
       }
     else
       {
-	assert(false);
+	MAASSERT(false);
       }
   }
   
@@ -479,7 +479,7 @@ namespace __gnu_debug
     _M_print_word("error: ");
     
     // Print the error message
-    assert(_M_text);
+    MAASSERT(_M_text);
     _M_print_string(_M_text);
     _M_print_word(".\n");
     
@@ -501,7 +501,7 @@ namespace __gnu_debug
 	  }
       }
     
-    abort();
+    maExit(1);
   }
 
   template<typename _Tp>
@@ -523,7 +523,7 @@ namespace __gnu_debug
   {
     if (!_M_wordwrap) 
       {
-	fprintf(stderr, "%s", __word);
+#warning 	fprintf(stderr, "%s", __word);
 	return;
       }
     
@@ -541,11 +541,11 @@ namespace __gnu_debug
 	    for (int i = 0; i < _M_indent; ++i)
 	      __spacing[i] = ' ';
 	    __spacing[_M_indent] = '\0';
-	    fprintf(stderr, "%s", __spacing);
+#warning 	    fprintf(stderr, "%s", __spacing);
 	    _M_column += _M_indent;
 	  }
 	
-	fprintf(stderr, "%s", __word);
+#warning 	fprintf(stderr, "%s", __word);
 	_M_column += __length;
 	
 	if (__word[__length - 1] == '\n') 
@@ -567,7 +567,7 @@ namespace __gnu_debug
   _M_print_string(const char* __string) const
   {
     const char* __start = __string;
-    const char* __end = __start;
+    const char* __e = __start;
     const int __bufsize = 128;
     char __buf[__bufsize];
 
@@ -575,21 +575,21 @@ namespace __gnu_debug
       {
 	if (*__start != '%')
 	  {
-	    // [__start, __end) denotes the next word
-	    __end = __start;
-	    while (isalnum(*__end))
-	      ++__end;
-	    if (__start == __end)
-	      ++__end;
-	    if (isspace(*__end))
-	      ++__end;
+	    // [__start, __e) denotes the next word
+	    __e = __start;
+	    while (isalnum(*__e))
+	      ++__e;
+	    if (__start == __e)
+	      ++__e;
+	    if (isspace(*__e))
+	      ++__e;
 	    
-	    const ptrdiff_t __len = __end - __start;
-	    assert(__len < __bufsize);
+	    const ptrdiff_t __len = __e - __start;
+	    MAASSERT(__len < __bufsize);
 	    memcpy(__buf, __start, __len);
 	    __buf[__len] = '\0';
 	    _M_print_word(__buf);
-	    __start = __end;
+	    __start = __e;
 	    
 	    // Skip extra whitespace
 	    while (*__start == ' ') 
@@ -599,7 +599,7 @@ namespace __gnu_debug
 	  } 
 	
 	++__start;
-	assert(*__start);
+	MAASSERT(*__start);
 	if (*__start == '%')
 	  {
 	    _M_print_word("%");
@@ -608,17 +608,17 @@ namespace __gnu_debug
 	  }
 	
 	// Get the parameter number
-	assert(*__start >= '1' && *__start <= '9');
+	MAASSERT(*__start >= '1' && *__start <= '9');
 	size_t __param = *__start - '0';
 	--__param;
-	assert(__param < _M_num_parameters);
+	MAASSERT(__param < _M_num_parameters);
       
 	// '.' separates the parameter number from the field
 	// name, if there is one.
 	++__start;
 	if (*__start != '.')
 	  {
-	    assert(*__start == ';');
+	    MAASSERT(*__start == ';');
 	    ++__start;
 	    __buf[0] = '\0';
 	    if (_M_parameters[__param]._M_kind == _Parameter::__integer)
@@ -639,8 +639,8 @@ namespace __gnu_debug
 	++__start;
 	while (*__start != ';')
 	  {
-	    assert(*__start);
-	    assert(__field_idx < __max_field_len-1);
+	    MAASSERT(*__start);
+	    MAASSERT(__field_idx < __max_field_len-1);
 	    __field[__field_idx++] = *__start++;
 	  }
 	++__start;

@@ -35,6 +35,8 @@
 #include <bits/atomicity.h>
 #include <bits/concurrence.h>
 
+#if LOCALES
+
 namespace __gnu_internal
 {
   // Defined in globals.cc.
@@ -115,8 +117,10 @@ namespace std
       __old = _S_global;
       __other._M_impl->_M_add_reference();
       _S_global = __other._M_impl; 
+#ifndef MAPIP
       if (__other.name() != "*")
 	setlocale(LC_ALL, __other.name().c_str());
+#endif
     }
 
     // Reference count sanity check: one reference removed for the
@@ -147,7 +151,7 @@ namespace std
   void  
   locale::_S_initialize()
   {
-#ifdef __GTHREADS
+#if __GTHREADS
     if (__gthread_active_p())
       __gthread_once(&_S_once, _S_initialize_once);
 #endif
@@ -345,3 +349,5 @@ namespace std
 #endif
   }
 } // namespace std
+
+#endif

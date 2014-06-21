@@ -36,6 +36,7 @@
 using namespace __cxxabiv1;
 
 #include "unwind-pe.h"
+#include "noexcept.icc"
 
 
 struct lsda_header_info
@@ -503,7 +504,7 @@ __cxa_call_unexpected (void *exc_obj_in)
       // If the exception spec allows std::bad_exception, throw that.
       // We don't have a thrown object to compare against, but since
       // bad_exception doesn't have virtual bases, that's OK; just pass 0.
-#ifdef __EXCEPTIONS  
+#if __EXCEPTIONS  
       const std::type_info &bad_exc = typeid (std::bad_exception);
       if (check_exception_spec (&info, &bad_exc, 0, xh_switch_value))
 	throw std::bad_exception();

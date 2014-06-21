@@ -35,5 +35,5 @@
 
 #ifdef _GLIBCXX_USE_WCHAR_T
 #define C wchar_t
-#include "string-inst.cc"
+#include "string-inst.cc.cpp"
 #endif

@@ -28,7 +28,7 @@
    the GNU General Public License.  */
 
 
-#include <math.h>
+#include <madmath.h>
 #include "mathconf.h"
 
 float

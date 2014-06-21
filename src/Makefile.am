@@ -49,21 +49,21 @@ endif
 # particular host.
 host_sources = \
 	atomicity.cc \
-	codecvt_members.cc \
+	codecvt.cc_members.cc \
 	collate_members.cc \
-	ctype_members.cc \
+	ctype.cc_members.cc \
 	messages_members.cc \
 	monetary_members.cc \
 	numeric_members.cc \
 	time_members.cc 
 
-codecvt_members.cc: ${glibcxx_srcdir}/$(CCODECVT_CC)
+codecvt.cc_members.cc: ${glibcxx_srcdir}/$(CCODECVT_CC)
 	$(LN_S) ${glibcxx_srcdir}/$(CCODECVT_CC) . || true
 
 collate_members.cc: ${glibcxx_srcdir}/$(CCOLLATE_CC)
 	$(LN_S) ${glibcxx_srcdir}/$(CCOLLATE_CC) . || true
 
-ctype_members.cc: ${glibcxx_srcdir}/$(CCTYPE_CC)
+ctype.cc_members.cc: ${glibcxx_srcdir}/$(CCTYPE_CC)
 	$(LN_S) ${glibcxx_srcdir}/$(CCTYPE_CC) . || true
 
 messages_members.cc: ${glibcxx_srcdir}/$(CMESSAGES_CC)
@@ -86,9 +86,9 @@ atomicity.cc: ${atomicity_file}
 # particular host, but with ad hoc naming rules.
 host_sources_extra = \
 	basic_file.cc \
-	c++locale.cc
+	c++locale.cc.cpp
 
-c++locale.cc: ${glibcxx_srcdir}/$(CLOCALE_CC)
+c++locale.cc.cpp: ${glibcxx_srcdir}/$(CLOCALE_CC)
 	$(LN_S) ${glibcxx_srcdir}/$(CLOCALE_CC) ./$@ || true
 
 basic_file.cc: ${glibcxx_srcdir}/$(BASIC_FILE_CC)
@@ -96,44 +96,44 @@ basic_file.cc: ${glibcxx_srcdir}/$(BASIC_FILE_CC)
 
 # Sources present in the src directory.
 sources = \
-	allocator.cc \
-	codecvt.cc \
-	complex_io.cc \
-	ctype.cc \
-	debug.cc \
-	debug_list.cc \
-	functexcept.cc \
-	globals_locale.cc \
-	globals_io.cc \
-	ios.cc \
-	ios_failure.cc \
-	ios_init.cc \
-	ios_locale.cc \
-	limits.cc \
-	list.cc \
-	locale.cc \
-	locale_init.cc \
-	locale_facets.cc \
-	localename.cc \
-	stdexcept.cc \
-	strstream.cc \
-	tree.cc \
-	allocator-inst.cc \
-	concept-inst.cc \
-	fstream-inst.cc \
-	ext-inst.cc \
-	io-inst.cc \
-	istream-inst.cc \
-	locale-inst.cc \
-	locale-misc-inst.cc \
-	misc-inst.cc \
-	ostream-inst.cc \
-	sstream-inst.cc \
-	streambuf-inst.cc \
-	string-inst.cc \
-	valarray-inst.cc \
-	wlocale-inst.cc \
-	wstring-inst.cc \
+	allocator.cc.cpp \
+	codecvt.cc.cpp \
+	complex_io.cc.cpp \
+	ctype.cc.cpp \
+	debug.cc.cpp \
+	debug.cc_list.cc.cc.cpp \
+	functexcept.cc.cpp \
+	globals_locale.cc.cc.cpp \
+	globals_io.cc.cpp \
+	ios.cc.cpp \
+	ios.cc_failure.cpp \
+	ios.cc_init.cc.cpp \
+	ios.cc_locale.cc.cc.cpp \
+	limits.cc.cpp \
+	list.cc.cpp \
+	locale.cc.cpp \
+	locale.cc_init.cpp \
+	locale.cc_facets.cc.cpp \
+	locale.ccname.cpp \
+	stdexcept.cc.cpp \
+	strstream.cc.cpp \
+	tree.cc.cpp \
+	allocator.cc-inst.cpp \
+	concept-inst.cc.cpp \
+	fstream-inst.cc.cpp \
+	ext-inst.cc.cpp \
+	io-inst.cc.cpp \
+	istream-inst.cc.cpp \
+	locale.cc-inst.cc.cpp \
+	locale.cc-misc-inst.cc.cpp \
+	misc-inst.cc.cpp \
+	ostream-inst.cc.cpp \
+	sstream-inst.cc.cpp \
+	streambuf-inst.cc.cpp \
+	string-inst.cc.cpp \
+	valarray-inst.cc.cpp \
+	wlocale.cc-inst.cc.cpp \
+	wstring-inst.cc.cc.cpp \
 	${host_sources} \
 	${host_sources_extra}
 
@@ -154,18 +154,18 @@ libstdc___la_LDFLAGS = \
 # Use special rules for the deprecated source files so that they find
 # deprecated include files.
 GLIBCXX_INCLUDE_DIR=$(glibcxx_builddir)/include
-strstream.lo: strstream.cc
-	$(LTCXXCOMPILE) -I$(GLIBCXX_INCLUDE_DIR)/backward -Wno-deprecated -c $<
-strstream.o: strstream.cc
-	$(CXXCOMPILE) -I$(GLIBCXX_INCLUDE_DIR)/backward -Wno-deprecated -c $<
+strstream.cc.lo: strstream.cc.cpp
+	$(LTCXXCOMPILE) -I$(GLIBCXX_INCLUDE_DIR)/backward -Wno-deprecated -S $<
+strstream.cc.o: strstream.cc.cpp
+	$(CXXCOMPILE) -I$(GLIBCXX_INCLUDE_DIR)/backward -Wno-deprecated -S $<
 
 # Use special rules for the concept-checking instantiations so that all
 # the generated template functions are also instantiated.  Force the checks
 # to be on so that the instantiations are actually seen.
-concept-inst.lo: concept-inst.cc
-	$(LTCXXCOMPILE) -D_GLIBCXX_CONCEPT_CHECKS -fimplicit-templates -c $<
-concept-inst.o: concept-inst.cc
-	$(CXXCOMPILE) -D_GLIBCXX_CONCEPT_CHECKS -fimplicit-templates -c $<
+concept-inst.cc.lo: concept-inst.cc.cpp
+	$(LTCXXCOMPILE) -D_GLIBCXX_CONCEPT_CHECKS -fimplicit-templates -S $<
+concept-inst.cc.o: concept-inst.cc.cpp
+	$(CXXCOMPILE) -D_GLIBCXX_CONCEPT_CHECKS -fimplicit-templates -S $<
 
 # AM_CXXFLAGS needs to be in each subdirectory so that it can be
 # modified in a per-library or per-sub-library way.  Need to manually
@@ -183,7 +183,7 @@ AM_CXXFLAGS = \
 
 # 1) Need to explicitly set LTCXXCOMPILE so that AM_CXXFLAGS is
 # last. (That way, things like -O2 passed down from the toplevel can
-# be overridden by --enable-debug.)
+# be overridden by --enable-debug.cc.)
 
 # 2) In general, libtool expects an argument such as `--tag=CXX' when
 # using the C++ compiler, because that will enable the settings
@@ -197,7 +197,7 @@ AM_CXXFLAGS = \
 # correct solution is to add `--tag CXX' to LTCXXCOMPILE and maybe
 # CXXLINK, just after $(LIBTOOL), so that libtool doesn't have to
 # attempt to infer which configuration to use
-LTCXXCOMPILE = $(LIBTOOL) --tag CXX --mode=compile $(CXX) $(INCLUDES) \
+LTCXXCOMPILE = $(LIBTOOL) --mode=compile $(CXX) $(INCLUDES) \
 	       $(AM_CPPFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(AM_CXXFLAGS)
 
 # 3) We'd have a problem when building the shared libstdc++ object if
@@ -206,39 +206,39 @@ LTCXXCOMPILE = $(LIBTOOL) --tag CXX --mode=compile $(CXX) $(INCLUDES) \
 # course is problematic at this point.  So, we get the top-level
 # directory to configure libstdc++-v3 to use gcc as the C++
 # compilation driver.
-CXXLINK = $(LIBTOOL) --tag CXX --mode=link $(CXX) \
+CXXLINK = $(LIBTOOL) --mode=link $(CXX) \
 	  $(OPT_LDFLAGS) $(SECTION_LDFLAGS) $(AM_CXXFLAGS) $(LDFLAGS) -o $@
 
 
-# Added bits to build debug library.
+# Added bits to build debug.cc library.
 if GLIBCXX_BUILD_DEBUG
-all-local: build_debug
-install-data-local: install_debug
+all-local: build_debug.cc
+install-data-local: install_debug.cc
 else
 all-local:
 install-data-local:
 endif
 
-debugdir = debug
+debug.ccdir = debug.cc
 
-# Build parallel set of debug objects here.
-stamp-debug:
-	if test ! -d ${debugdir}; then \
-	  mkdir -p ${debugdir}; \
-	  (cd ${debugdir}; \
+# Build parallel set of debug.cc objects here.
+stamp-debug.cc:
+	if test ! -d ${debug.ccdir}; then \
+	  mkdir -p ${debug.ccdir}; \
+	  (cd ${debug.ccdir}; \
 	  sed -e 's/top_builddir = \.\./top_builddir = ..\/../' \
 	      -e 's/srcdir = \.\./srcdir = ..\/../' \
 	      -e 's/glibcxx_basedir = \.\./glibcxx_basedir = ..\/../' \
-	      -e 's/all-local: build_debug/all-local:/' \
-	      -e 's/install-data-local: install_debug/install-data-local:/' \
+	      -e 's/all-local: build_debug.cc/all-local:/' \
+	      -e 's/install-data-local: install_debug.cc/install-data-local:/' \
 	  < ../Makefile > Makefile) ; \
 	fi; \
-	echo `date` > stamp-debug;
+	echo `date` > stamp-debug.cc;
 
-build_debug: stamp-debug
-	(cd ${debugdir} && $(MAKE) CXXFLAGS='$(DEBUG_FLAGS)' all)
+build_debug.cc: stamp-debug.cc
+	(cd ${debug.ccdir} && $(MAKE) CXXFLAGS='$(DEBUG_FLAGS)' all)
 
-# Install debug library here.
-install_debug:
-	(cd ${debugdir} && $(MAKE) \
-	toolexeclibdir=$(glibcxx_toolexeclibdir)/debug install)
+# Install debug.cc library here.
+install_debug.cc:
+	(cd ${debug.ccdir} && $(MAKE) \
+	toolexeclibdir=$(glibcxx_toolexeclibdir)/debug.cc install)

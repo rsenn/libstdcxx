@@ -91,9 +91,11 @@ namespace __gnu_cxx
 	
 	size_t __bytes_to_get = (2 * __total_bytes
 				 + _M_round_up(_S_heap_size >> 4));
-	try
-	  {
+#ifdef EXCEPTIONS
+	try {
+#endif
 	    _S_start_free = static_cast<char*>(::operator new(__bytes_to_get));
+#ifdef EXCEPTIONS
 	  }
 	catch (...)
 	  {
@@ -119,6 +121,7 @@ namespace __gnu_cxx
 	    _S_start_free = _S_end_free = 0;   // We have no chunk.
 	    __throw_exception_again;
 	  }
+#endif
 	_S_heap_size += __bytes_to_get;
 	_S_end_free = _S_start_free + __bytes_to_get;
 	return _M_allocate_chunk(__n, __nobjs);

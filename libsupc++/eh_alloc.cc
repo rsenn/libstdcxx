@@ -76,7 +76,7 @@ static one_buffer emergency_buffer[EMERGENCY_OBJ_COUNT];
 static bitmask_type emergency_used;
 
 
-#ifdef __GTHREADS
+#if __GTHREADS
 #ifdef __GTHREAD_MUTEX_INIT
 static __gthread_mutex_t emergency_mutex =__GTHREAD_MUTEX_INIT;
 #else 
@@ -103,7 +103,7 @@ __cxa_allocate_exception(std::size_t thrown_size) throw()
 
   if (! ret)
     {
-#ifdef __GTHREADS
+#if __GTHREADS
 #ifdef __GTHREAD_MUTEX_INIT_FUNCTION
       static __gthread_once_t once = __GTHREAD_ONCE_INIT;
       __gthread_once (&once, emergency_mutex_init);
@@ -127,7 +127,7 @@ __cxa_allocate_exception(std::size_t thrown_size) throw()
       ret = &emergency_buffer[which][0];
 
     failed:;
-#ifdef __GTHREADS
+#if __GTHREADS
       __gthread_mutex_unlock (&emergency_mutex);
 #endif
       if (!ret)
@@ -150,7 +150,7 @@ __cxa_free_exception(void *vptr) throw()
       unsigned int which
 	= (unsigned)(ptr - &emergency_buffer[0][0]) / EMERGENCY_OBJ_SIZE;
 
-#ifdef __GTHREADS
+#if __GTHREADS
       __gthread_mutex_lock (&emergency_mutex);
       emergency_used &= ~((bitmask_type)1 << which);
       __gthread_mutex_unlock (&emergency_mutex);

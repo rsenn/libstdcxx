@@ -42,7 +42,8 @@
 #ifndef _CXXABI_H
 #define _CXXABI_H 1
 
-#include <stddef.h>
+#include <ma.h>
+#include <stdint.h>
  
 #ifdef __cplusplus
 namespace __cxxabiv1

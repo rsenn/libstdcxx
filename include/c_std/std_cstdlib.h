@@ -49,7 +49,8 @@
 #include <bits/c++config.h>
 #include <cstddef>
 
-#include <stdlib.h>
+#include <mastdlib.h>
+#include <maheap.h>
 
 // Get rid of those macros defined in <stdlib.h> in lieu of real functions.
 #undef abort
@@ -84,11 +85,11 @@
 namespace std
 {
   using ::div_t;
-  using ::ldiv_t;
+//  using ::ldiv_t;
 
-  using ::abort;
+//  using ::abort;
   using ::abs;
-  using ::atexit;
+//  using ::atexit;
   using ::atof;
   using ::atoi;
   using ::atol;
@@ -119,11 +120,9 @@ namespace std
   using ::wctomb;
 #endif // _GLIBCXX_USE_WCHAR_T
 
-  inline long
-  abs(long __i) { return labs(__i); }
+  //inline long abs(long __i) { return labs(__i); }
 
-  inline ldiv_t
-  div(long __i, long __j) { return ldiv(__i, __j); }
+  //inline ldiv_t div(long __i, long __j) { return ldiv(__i, __j); }
 }
 
 #if _GLIBCXX_USE_C99

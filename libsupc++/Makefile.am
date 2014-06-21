@@ -38,32 +38,32 @@ c_sources = \
 	cp-demangle.c 
 
 sources = \
-	del_op.cc \
-	del_opnt.cc \
-	del_opv.cc \
-	del_opvnt.cc \
-	eh_alloc.cc \
-	eh_aux_runtime.cc \
-	eh_catch.cc \
-	eh_exception.cc \
-	eh_globals.cc \
-	eh_personality.cc \
-	eh_term_handler.cc \
-	eh_terminate.cc \
-	eh_throw.cc \
-	eh_type.cc \
-	eh_unex_handler.cc \
-	guard.cc \
-	new_handler.cc \
-	new_op.cc \
-	new_opnt.cc \
-	new_opv.cc \
-	new_opvnt.cc \
-	pure.cc \
-	tinfo.cc \
-	tinfo2.cc \
-	vec.cc \
-	vterminate.cc
+	del_op.cc.cpp \
+	del_op.ccnt.cpp \
+	del_op.ccv.cc.cpp \
+	del_op.ccv.ccnt.cpp \
+	eh_alloc.cc.cpp \
+	eh_aux_runtime.cc.cpp \
+	eh_catch.cc.cpp \
+	eh_exception.cc.cpp \
+	eh_globals.cc.cpp \
+	eh_personality.cc.cpp \
+	eh_term_handler.cc.cpp \
+	eh_terminate.cc.cpp \
+	eh_throw.cc.cpp \
+	eh_type.cc.cpp \
+	eh_unex_handler.cc.cpp \
+	guard.cc.cpp \
+	new_handler.cc.cpp \
+	new_op.cc.cpp \
+	new_op.ccnt.cc.cpp \
+	new_op.ccv.cpp \
+	new_op.ccvnt.cpp \
+	pure.cc.cpp \
+	tinfo.cc.cpp \
+	tinfo.cc2.cc.cpp \
+	vec.cc.cc \
+	vterminate.cc.cpp
 
 libsupc___la_SOURCES = $(sources) $(c_sources)
 libsupc__convenience_la_SOURCES = $(sources) $(c_sources)
@@ -104,16 +104,16 @@ cp-demangle.c:
 	rm -f $@
 	$(LN_S) $(toplevel_srcdir)/libiberty/cp-demangle.c $@
 cp-demangle.lo: cp-demangle.c
-	$(LTCOMPILE) -DIN_GLIBCPP_V3 -Wno-error -c $<
+	$(LTCOMPILE) -DIN_GLIBCPP_V3 -Wno-error -S $<
 cp-demangle.o: cp-demangle.c
-	$(C_COMPILE) -DIN_GLIBCPP_V3 -Wno-error -c $<
+	$(C_COMPILE) -DIN_GLIBCPP_V3 -Wno-error -S $<
 
 
 # libstdc++ libtool notes
 
 # 1) Need to explicitly set LTCXXCOMPILE so that AM_CXXFLAGS is
 # last. (That way, things like -O2 passed down from the toplevel can
-# be overridden by --enable-debug.)
+# be overridden by --enable-debug.cc.)
 
 # 2) In general, libtool expects an argument such as `--tag=CXX' when
 # using the C++ compiler, because that will enable the settings
@@ -128,9 +128,9 @@ cp-demangle.o: cp-demangle.c
 # CXXLINK, just after $(LIBTOOL), so that libtool doesn't have to
 # attempt to infer which configuration to use.
 #
-# We have to put --tag disable-shared after --tag CXX lest things
+# We have to put --tag disable-shared after lest things
 # CXX undo the affect of disable-shared.
-LTCXXCOMPILE = $(LIBTOOL) --tag CXX --tag disable-shared \
+LTCXXCOMPILE = $(LIBTOOL) --tag disable-shared \
 	       --mode=compile $(CXX) $(TOPLEVEL_INCLUDES) \
 	       $(AM_CPPFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(AM_CXXFLAGS)
 
@@ -140,7 +140,7 @@ LTCXXCOMPILE = $(LIBTOOL) --tag CXX --tag disable-shared \
 # course is problematic at this point.  So, we get the top-level
 # directory to configure libstdc++-v3 to use gcc as the C++
 # compilation driver.
-CXXLINK = $(LIBTOOL) --tag CXX --tag disable-shared \
+CXXLINK = $(LIBTOOL) --tag disable-shared \
 	  --mode=link $(CXX) \
 	  $(OPT_LDFLAGS) $(SECTION_LDFLAGS) $(AM_CXXFLAGS) $(LDFLAGS) -o $@
 
@@ -149,7 +149,7 @@ CXXLINK = $(LIBTOOL) --tag CXX --tag disable-shared \
 install-glibcxxinstallHEADERS: $(glibcxxinstall_HEADERS)
 	@$(NORMAL_INSTALL)
 	$(mkinstalldirs) $(DESTDIR)$(glibcxxinstalldir)
-	@list='$(glibcxxinstall_HEADERS)'; for p in $$list; do \
+	@list.cc='$(glibcxxinstall_HEADERS)'; for p in $$list.cc; do \
 	  q=`echo $$p | sed -e 's,.*/,,'`; \
 	  if test -f "$$p"; then d= ; else d="$(srcdir)/"; fi; \
 	  echo " $(INSTALL_DATA) $$d$$p $(DESTDIR)$(glibcxxinstalldir)/$$q"; \
@@ -158,7 +158,7 @@ install-glibcxxinstallHEADERS: $(glibcxxinstall_HEADERS)
 
 uninstall-glibcxxinstallHEADERS:
 	@$(NORMAL_UNINSTALL)
-	list='$(glibcxxinstall_HEADERS)'; for p in $$list; do \
+	list.cc='$(glibcxxinstall_HEADERS)'; for p in $$list.cc; do \
 	  q=`echo $$p | sed -e 's,.*/,,'`; \
 	  rm -f $(DESTDIR)$(glibcxxinstalldir)/$$q; \
 	done

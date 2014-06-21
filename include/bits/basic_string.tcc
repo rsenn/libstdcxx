@@ -148,13 +148,13 @@ namespace std
 								      __end));
 	// Check for out_of_range and length_error exceptions.
 	_Rep* __r = _Rep::_S_create(__dnew, size_type(0), __a);
-	try
+	//try
 	  { _S_copy_chars(__r->_M_refdata(), __beg, __end); }
-	catch(...)
+	/*catch(...)
 	  {
 	    __r->_M_destroy(__a);
 	    __throw_exception_again;
-	  }
+	  }*/
 	__r->_M_length = __dnew;
 	__r->_M_refdata()[__dnew] = _Rep::_S_terminal;  // grrr.
 	return __r->_M_refdata();

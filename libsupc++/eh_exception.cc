@@ -40,5 +40,5 @@ std::bad_exception::~bad_exception() throw() { }
 const char* 
 std::exception::what() const throw()
 {
-  return typeid (*this).name ();
+  return __func__; //typeid (*this).name ();
 }

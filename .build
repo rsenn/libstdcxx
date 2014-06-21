@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildSequence version="1.1">
+<buildStep type="com.mobilesorcery.sdk.html5.debugsupport"/>
+<buildStep type="resource"/>
+<buildStep type="compile"/>
+<buildStep type="cmd">
+<cmd foe="false" name="archive" pf="false" pt="">%mosync-bin%/pipe-tool -Lstdc++.lib %current-project%/*.s</cmd>
+</buildStep>
+</buildSequence>

@@ -34,6 +34,8 @@
 
 #include <locale>
 
+#if LOCALES
+
 // Instantiation configuration.
 #ifndef C
 # define C char
@@ -314,3 +316,4 @@ namespace std
 		  ios_base::fmtflags, bool);
 #endif
 } // namespace std
+#endif

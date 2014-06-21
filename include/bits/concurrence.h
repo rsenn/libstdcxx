@@ -31,10 +31,12 @@
 #ifndef _CONCURRENCE_H
 #define _CONCURRENCE_H 1
 
+//#warning concurrence
+
 // GCC's thread abstraction layer
 #include "bits/gthr.h"
 
-#if __GTHREADS
+#if __GTHREADS && !defined(MAPIP)
 
 # ifdef __GTHREAD_MUTEX_INIT
 #  define __glibcxx_mutex_type __gthread_mutex_t
@@ -60,8 +62,10 @@ __gthread_mutex_lock(&NAME)
 
 #else
 
-# define __glibcxx_mutex_type __gthread_mutex_t
-# define __glibcxx_mutex_define_initialized(NAME) __gthread_mutex_t NAME
+typedef int mutex_type;
+
+# define __glibcxx_mutex_type mutex_type
+# define __glibcxx_mutex_define_initialized(NAME) mutex_type NAME
 # define __glibcxx_mutex_lock(NAME)
 # define __glibcxx_mutex_unlock(NAME)
 

@@ -49,6 +49,10 @@
 #include <stdint.h> // For int64_t
 #endif
 
+#ifndef EOF
+#define EOF (-1)
+#endif
+
 namespace std
 {
   // The types streamoff, streampos and wstreampos and the class

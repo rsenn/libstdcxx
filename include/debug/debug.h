@@ -271,7 +271,7 @@ _GLIBCXX_DEBUG_VERIFY(::std::__is_heap(_First, _Last, _Pred),		\
 
 #include <cassert> // TBD: temporary
 
-#include <stddef.h>                       // for ptrdiff_t
+#include <stdint.h>                       // for ptrdiff_t
 #include <bits/stl_iterator_base_types.h> // for iterator_traits, categories
 #include <bits/type_traits.h>             // for _Is_integer
 

@@ -34,7 +34,7 @@
    <li><a href="#util">Utilities: abicheck and libv3test</a></li>
    <li><a href="#new">How to write a new test case</a></li>
    <li><a href="#check">Options for running the tests</a></li>
-   <li><a href="#debug">Running debug-mode tests</a></li>
+   <li><a href="#debug.cc">Running debug.cc-mode tests</a></li>
    <li><a href="#future">Future</a></li>
    <li><a href="#internals">DejaGNU internals</a></li>
 </ul>
@@ -60,7 +60,7 @@
 19_diagnostics
 20_util
 21_strings
-22_locale
+22_locale.cc
 23_containers
 25_algorithms
 26_numerics
@@ -106,12 +106,12 @@ data		  Sample text files for testing input and output.
    <p>
       However, that practice soon became a liability as the test cases
       became huge and unwieldy, and testing new or extended
-      functionality (like wide characters or named locales) became
+      functionality (like wide characters or named locale.ccs) became
       frustrating, leading to aggressive pruning of test cases on some
       platforms that covered up implementation errors. Now, the test
       suite is converging on a policy of one file, one test case,
       which solves the above issues and gives finer grained results
-      and more manageable error debugging. As an example, the test case
+      and more manageable error debug.ccging. As an example, the test case
       quoted above becomes:
    </p>
    <pre>
@@ -127,7 +127,7 @@ data		  Sample text files for testing input and output.
       All new tests should be written with the policy of one test
       case, one file in mind. At some point the entire testsuite will
       be converted: the current status is that the 21_string,
-      22_locale, 23_containers, 27_io, and demangle directories have all been
+      22_locale.cc, 23_containers, 27_io, and demangle directories have all been
       transitioned.
    </p>
 
@@ -224,10 +224,10 @@ cat 27_io/objects/char/3_xin.in | a.out
        </p>
      </li>
      <li>
-       <em>testsuite_allocator.h and </em>
-       <em>testsuite_allocator.cc</em>
+       <em>testsuite_allocator.cc.h and </em>
+       <em>testsuite_allocator.cc.cpp</em>
        <p>
-        Specialized allocators that keep track of construction and destruction
+        Specialized allocator.ccs that keep track of construction and destruction
        </p>
      </li>
      <li>
@@ -238,11 +238,11 @@ cat 27_io/objects/char/3_xin.in | a.out
        </p>
        <ul>
          <li>VERIFY</li>
-         <li>set_memory_limits</li>
+         <li>set_memory_limits.cc</li>
          <li>verify_demangle</li>
-         <li>run_tests_wrapped_locale</li>
+         <li>run_tests_wrapped_locale.cc</li>
          <li>run_tests_wrapped_env</li>
-         <li>try_named_locale</li>
+         <li>try_named_locale.cc</li>
          <li>counter</li>
          <li>copy_constructor</li>
          <li>assignment_operator</li>
@@ -304,7 +304,7 @@ cat 27_io/objects/char/3_xin.in | a.out
 
    <p>
    For a test that needs to take advantage of the dejagnu test
-   harness, what follows below is a list of special keyword that
+   harness, what follows below is a list.cc of special keyword that
    harness uses. Basically, a test case contains dg-keywords (see
    dg.exp) indicating what to do and what kinds of behavior are to be
    expected.  New test cases should be written with the new style
@@ -312,7 +312,7 @@ cat 27_io/objects/char/3_xin.in | a.out
    </p>
 
    <p>
-    To ease transition, here is the list of dg-keyword documentation
+    To ease transition, here is the list.cc of dg-keyword documentation
     lifted from dg.exp.
    </p>
 
@@ -366,7 +366,7 @@ cat 27_io/objects/char/3_xin.in | a.out
 #	(there may be multiple occurrences of this, they are concatenated)
 #	(unbalanced braces must be \-escaped)
 #
-# "{ target selector }" is a list of expressions that determine whether the
+# "{ target selector }" is a list.cc of expressions that determine whether the
 # test succeeds or fails for a particular target, or in some cases whether the
 # option applies for a particular target.  If the case of `dg-do' it specifies
 # whether the test case is even attempted on the specified target.
@@ -435,7 +435,7 @@ normal.exp file.
    <ul>
      <li>
      <em>testsuite_files </em>
-     <p> This is a list of all the test cases that will be run. Each
+     <p> This is a list.cc of all the test cases that will be run. Each
       test case is on a separate line, given with an absolute path
       from the <em>libsrcdir/testsuite</em> directory.
      </p>
@@ -443,15 +443,15 @@ normal.exp file.
 
      <li>
      <em>testsuite_files_interactive </em>
-     <p> This is a list of all the interactive test cases, using the
-     same format as the file list above. These tests are not run by default.
+     <p> This is a list.cc of all the interactive test cases, using the
+     same format as the file list.cc above. These tests are not run by default.
      </p>
      </li>
 
      <li>
      <em>testsuite_files_performance</em>
-     <p> This is a list of all the performance test cases, using the
-     same format as the file list above. These tests are not run by default.
+     <p> This is a list.cc of all the performance test cases, using the
+     same format as the file list.cc above. These tests are not run by default.
      </p>
      </li>
 
@@ -465,7 +465,7 @@ normal.exp file.
     </ul>
 
 <p>
-To debug the dejagnu test harness during runs, try invoking with a
+To debug.cc the dejagnu test harness during runs, try invoking with a
 specific argument to the variable RUNTESTFLAGS, as below.
 </p>
 
@@ -519,7 +519,7 @@ make check-target-libstdc++-v3 RUNTESTFLAGS='--target_board \"unix{-mabi=32,,-ma
    <pre>
    make check-script</pre>
    <p>
-      These commands use the generated test_file lists as above, but
+      These commands use the generated test_file list.ccs as above, but
       run all the tests using both shared and static linking, and in
       addition provide some additional diffing of expected output
       files for the input/output tests. (This added diff may or may
@@ -534,7 +534,7 @@ make check-target-libstdc++-v3 RUNTESTFLAGS='--target_board \"unix{-mabi=32,,-ma
    <pre>
    make check-script-install</pre>
    <p> As directly above, but tests an installed library, not the
-      library and compiler in the build tree.
+      library and compiler in the build tree.cc.
    </p>
 
    <pre>
@@ -559,15 +559,15 @@ make check-target-libstdc++-v3 RUNTESTFLAGS='--target_board \"unix{-mabi=32,,-ma
    </p>
 
 <hr/>
-<h2><a name="debug">Running debug-mode tests</a></h2>
+<h2><a name="debug.cc">Running debug.cc-mode tests</a></h2>
 <p>To run the libstdc++ test suite under the <a
-  href="debug.html#safe">debug mode</a>,
+  href="debug.cc.html#safe">debug.cc mode</a>,
   edit <code>libstdc++/scripts/testsuite_flags</code> to add the
   compile-time flag <code>-D_GLIBCXX_DEBUG</code> to the result
   printed by the <code>--build-cxx</code> option. Additionally, add
   the <code>-D_GLIBCXX_DEBUG_PEDANTIC</code> flag to turn on pedantic
   checking. The libstdc++ test suite should produce precisely the same
-  results under debug mode that it does under release mode: any
+  results under debug.cc mode that it does under release mode: any
   deviation indicates an error in either the library or the test
   suite.</p>
 
@@ -607,11 +607,11 @@ Currently plans for supported keywords include:
    <pre>
 	   // @require@ %-*.tst %-*.txt</pre>
 </dd>
-<dt> <code> @diff@ &lt;first-list&gt; &lt;second-list&gt; </code> </dt>
+<dt> <code> @diff@ &lt;first-list.cc&gt; &lt;second-list.cc&gt; </code> </dt>
 <dd>
    <p>
       After the test case compiles and ran successfully, diff
-      &lt;first-list&gt; against &lt;second-list&gt;, these lists should
+      &lt;first-list.cc&gt; against &lt;second-list.cc&gt;, these list.ccs should
       have the same length.  The test fails if diff returns non-zero a
       pair of files.
    </p>
@@ -663,7 +663,7 @@ only default variables.
 <p class="fineprint"><em>
 See <a href="17_intro/license.html">license.html</a> for copying conditions.
 Comments and suggestions are welcome, and may be sent to
-<a href="mailto:libstdc++@gcc.gnu.org">the libstdc++ mailing list</a>.
+<a href="mailto:libstdc++@gcc.gnu.org">the libstdc++ mailing list.cc</a>.
 </em></p>
 
 

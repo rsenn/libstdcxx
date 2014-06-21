@@ -24,7 +24,7 @@ top_builddir = ..
 
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 INSTALL = @INSTALL@
-install_sh_DATA = $(install_sh) -c -m 644
+install_sh_DATA = $(install_sh) -S -m 644
 install_sh_PROGRAM = $(install_sh) -c
 install_sh_SCRIPT = $(install_sh) -c
 INSTALL_HEADER = $(INSTALL_DATA)
@@ -570,9 +570,9 @@ pch_input = ${host_builddir}/stdc++.h
 pch_output_builddir = ${host_builddir}/stdc++.h.gch
 pch_source = ${glibcxx_srcdir}/include/stdc++.h
 PCHFLAGS = -Winvalid-pch -Wno-deprecated -x c++-header $(CXXFLAGS)
-@GLIBCXX_BUILD_PCH_TRUE@pch_build = ${pch_input}
+#@GLIBCXX_BUILD_PCH_TRUE@pch_build = ${pch_input}
 @GLIBCXX_BUILD_PCH_FALSE@pch_build = 
-@GLIBCXX_BUILD_PCH_TRUE@pch_install = install-pch
+#@GLIBCXX_BUILD_PCH_TRUE@pch_install = install-pch
 @GLIBCXX_BUILD_PCH_FALSE@pch_install = 
 
 # List of all timestamp files.  By keeping only one copy of this list, both

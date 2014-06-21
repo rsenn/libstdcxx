@@ -46,6 +46,10 @@
 extern "C" void
 __cxa_pure_virtual (void)
 {
+#ifdef MAPIP
+    maPanic(0, "pure virtual method called");
+#else
   writestr ("pure virtual method called\n");
   std::terminate ();
+#endif
 }

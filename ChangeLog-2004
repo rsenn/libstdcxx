@@ -815,7 +815,7 @@
 
 	* include/ext/mt_allocator.h (__mt_alloc<>::_S_initialize):
 	Streamline the second half, wrapping it in a single
-	'#ifdef __GTHREADS if (__gthread_active_p())' and avoiding
+	'#if __GTHREADS if (__gthread_active_p())' and avoiding
 	conditionals inside loops.
 
 2004-05-30  Paolo Carlini  <pcarlini@suse.de>
@@ -3019,7 +3019,7 @@
 2004-01-30  David Edelsohn  <edelsohn@gnu.org>
 
 	* src/allocator.cc: Protect _S_get_thread_id() and
-	_S_thread_key_destr() with #ifdef __GTHREADS.
+	_S_thread_key_destr() with #if __GTHREADS.
 
 2004-01-30  Paolo Carlini  <pcarlini@suse.de>
 

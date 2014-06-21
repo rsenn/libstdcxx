@@ -37,12 +37,14 @@
 #pragma GCC system_header
 
 #include <streambuf>
-#include <unistd.h>
+#include <maapi.h>
 #include <cstdio>
 
 #ifdef _GLIBCXX_USE_WCHAR_T
 #include <cwchar>
 #endif
+
+#include "noexcept.icc"
 
 namespace __gnu_cxx
 {
@@ -59,7 +61,7 @@ namespace __gnu_cxx
 
     private:
       // Underlying stdio FILE
-      std::__c_file* const _M_file;
+      MAHandle _M_file;
 
       // Last character gotten. This is used when pbackfail is
       // called from basic_streambuf::sungetc()
@@ -67,7 +69,7 @@ namespace __gnu_cxx
 
     public:
       explicit
-      stdio_sync_filebuf(std::__c_file* __f)
+      stdio_sync_filebuf(MAHandle __f)
       : _M_file(__f), _M_unget_buf(traits_type::eof())
       { }
 
@@ -78,25 +80,28 @@ namespace __gnu_cxx
        *  Note that there is no way for the library to track what you do
        *  with the file, so be careful.
        */
-      std::__c_file* const
+      MAHandle const
       file() { return this->_M_file; }
 
     protected:
       int_type
       syncgetc();
 
+#ifndef MAPIP
       int_type
       syncungetc(int_type __c);
-
+#endif
       int_type
       syncputc(int_type __c);
 
+#ifndef MAPIP
       virtual int_type
       underflow()
       {
 	int_type __c = this->syncgetc();
 	return this->syncungetc(__c);
       }
+#endif
 
       virtual int_type
       uflow()
@@ -106,6 +111,7 @@ namespace __gnu_cxx
 	return _M_unget_buf;
       }
 
+#ifndef MAPIP
       virtual int_type
       pbackfail(int_type __c = traits_type::eof())
       {
@@ -127,6 +133,7 @@ namespace __gnu_cxx
 	_M_unget_buf = __eof;
 	return __ret;
       }
+#endif
 
       virtual std::streamsize
       xsgetn(char_type* __s, std::streamsize __n);
@@ -137,9 +144,9 @@ namespace __gnu_cxx
 	int_type __ret;
 	if (traits_type::eq_int_type(__c, traits_type::eof()))
 	  {
-	    if (std::fflush(_M_file))
-	      __ret = traits_type::eof();
-	    else
+	    //if(std::fflush(_M_file))
+	    //  __ret = traits_type::eof();
+	    //else
 	      __ret = traits_type::not_eof(__c);
 	  }
 	else
@@ -152,7 +159,7 @@ namespace __gnu_cxx
 
       virtual int
       sync()
-      { return std::fflush(_M_file); }
+      { return 0; } //std::fflush(_M_file); }
 
       virtual std::streampos
       seekoff(std::streamoff __off, std::ios_base::seekdir __dir,
@@ -161,17 +168,20 @@ namespace __gnu_cxx
 	std::streampos __ret(std::streamoff(-1));
 	int __whence;
 	if (__dir == std::ios_base::beg)
-	  __whence = SEEK_SET;
+	  __whence = MA_SEEK_SET;
 	else if (__dir == std::ios_base::cur)
-	  __whence = SEEK_CUR;
+	  __whence = MA_SEEK_CUR;
 	else
-	  __whence = SEEK_END;
+	  __whence = MA_SEEK_END;
 #ifdef _GLIBCXX_USE_LFS
 	if (!fseeko64(_M_file, __off, __whence))
 	  __ret = std::streampos(ftello64(_M_file));
 #else
-	if (!fseek(_M_file, __off, __whence))
-	  __ret = std::streampos(std::ftell(_M_file));
+  
+	if ((__ret = maFileSeek(_M_file, __off, __whence)) >= 0)
+	  __ret = std::streampos(__ret);
+  else
+    __ret = traits_type::eof();
 #endif
 	return __ret;
       }
@@ -186,23 +196,35 @@ namespace __gnu_cxx
   template<>
     inline stdio_sync_filebuf<char>::int_type
     stdio_sync_filebuf<char>::syncgetc()
-    { return std::getc(_M_file); }
+    {
+        char c;
+        if(maFileRead(_M_file,&c,1) >= 0)
+            return static_cast<int>(static_cast<unsigned char>(c));
+        return traits_type::eof();
+    }
 
-  template<>
+/*  template<>
     inline stdio_sync_filebuf<char>::int_type
     stdio_sync_filebuf<char>::syncungetc(int_type __c)
     { return std::ungetc(__c, _M_file); }
-
+*/
   template<>
     inline stdio_sync_filebuf<char>::int_type
     stdio_sync_filebuf<char>::syncputc(int_type __c)
-    { return std::putc(__c, _M_file); }
+    { 
+      const char c = __c;
+      if(maFileWrite(_M_file,&c,1) >= 0)
+        return static_cast<int>(static_cast<unsigned char>(c));
+      return traits_type::eof();
+    }
 
   template<>
     inline std::streamsize
     stdio_sync_filebuf<char>::xsgetn(char* __s, std::streamsize __n)
     {
-      std::streamsize __ret = std::fread(__s, 1, __n, _M_file);
+      std::streamsize __ret = traits_type::eof();
+      if(maFileRead(_M_file,__s,__n) >= 0)
+        __ret = __n;
       if (__ret > 0)
 	_M_unget_buf = traits_type::to_int_type(__s[__ret - 1]);
       else
@@ -213,7 +235,12 @@ namespace __gnu_cxx
   template<>
     inline std::streamsize
     stdio_sync_filebuf<char>::xsputn(const char* __s, std::streamsize __n)
-    { return std::fwrite(__s, 1, __n, _M_file); }
+    { 
+      std::streamsize __ret = traits_type::eof();
+      if(maFileWrite(_M_file,__s,__n) >= 0)
+        __ret = __n;
+      return __ret;
+    }
 
 #ifdef _GLIBCXX_USE_WCHAR_T
   template<>
@@ -221,10 +248,12 @@ namespace __gnu_cxx
     stdio_sync_filebuf<wchar_t>::syncgetc()
     { return std::getwc(_M_file); }
 
+#ifndef MAPIP
   template<>
     inline stdio_sync_filebuf<wchar_t>::int_type
     stdio_sync_filebuf<wchar_t>::syncungetc(int_type __c)
     { return std::ungetwc(__c, _M_file); }
+#endif
 
   template<>
     inline stdio_sync_filebuf<wchar_t>::int_type

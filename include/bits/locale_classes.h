@@ -99,7 +99,7 @@ namespace std
      *  intersection.  The category all is the union of these values.
      *
      *  @if maint
-     *  NB: Order must match _S_facet_categories definition in locale.cc
+     *  NB: Order must match _S_facet_categories definition in locale.cpp
      *  @endif
     */
     static const category none		= 0;
@@ -309,7 +309,7 @@ namespace std
     // and LC_IDENTIFICATION.
     static const size_t _S_categories_size = 6 + _GLIBCXX_NUM_CATEGORIES;
 
-#ifdef __GTHREADS
+#if __GTHREADS
     static __gthread_once_t _S_once;
 #endif
 
@@ -354,7 +354,7 @@ namespace std
     // String literal for the name of the classic locale.
     static const char			_S_c_name[2];
 
-#ifdef __GTHREADS
+#if __GTHREADS
     static __gthread_once_t		_S_once;
 #endif
 
@@ -407,10 +407,7 @@ namespace std
     {
       if (__gnu_cxx::__exchange_and_add(&_M_refcount, -1) == 1)
 	{
-	  try
-	    { delete this; }
-	  catch (...)
-	    { }
+	    delete this;
 	}
     }
 
@@ -512,10 +509,7 @@ namespace std
     {
       if (__gnu_cxx::__exchange_and_add(&_M_refcount, -1) == 1)
 	{
-	  try
-	    { delete this; }
-	  catch(...)
-	    { }
+	    delete this;
 	}
     }
 

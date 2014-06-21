@@ -5740,7 +5740,7 @@ auto_ptr in initialization must be non-const. My idea is to add additional
 constructor template with sole propose to generate ill-formed, diagnostic
 required, instance for const auto_ptr arguments during instantiation of
 declaration. This special constructor will not be instantiated for other
-types which is achievable using 14.8.2/2 (SFINAE). Having this constructor
+types which is achievable using 13.4.6/2 (SFINAE). Having this constructor
 in hand makes the constructor template%lt;class Y&gt; auto_ptr(auto_ptr%lt;Y&gt; const&amp;)
 legitimate since the actual argument can't be const yet non const r-value
 are acceptable.

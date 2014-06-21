@@ -117,7 +117,7 @@ typedef int Int64_t __attribute ((mode (DI)));
 #  ifdef MAXFLOAT
 #   define HUGE_VAL MAXFLOAT
 #  else
-#   error "We need HUGE_VAL!"
+#   define HUGE_VAL 3.40282347e+38F
 #  endif
 # endif
 #endif

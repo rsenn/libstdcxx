@@ -104,7 +104,7 @@ __do_catch (const type_info *thr_type,
 {
   if (*this == *thr_type)
     return true;      // same type
-  if (typeid (*this) != typeid (*thr_type))
+//  if (typeid (*this) != typeid (*thr_type))
     return false;     // not both same kind of pointers
   
   if (!(outer & 1))
@@ -139,7 +139,7 @@ __pointer_catch (const __pbase_type_info *thrown_type,
                  void **thr_obj,
                  unsigned outer) const
 {
-  if (outer < 2 && *__pointee == typeid (void))
+  if (outer < 2 /*&& *__pointee == typeid (void)*/)
     {
       // conversion to void
       return !thrown_type->__pointee->__is_function_p ();

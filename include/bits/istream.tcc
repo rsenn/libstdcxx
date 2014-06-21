@@ -40,6 +40,8 @@
 #include <locale>
 #include <ostream> // For flush()
 
+#include "noexcept.icc"
+
 namespace std
 {
   template<typename _CharT, typename _Traits>

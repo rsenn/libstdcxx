@@ -37,8 +37,10 @@
 extern "C" void
 __cxa_bad_cast ()
 {
-#ifdef __EXCEPTIONS  
+#if __EXCEPTIONS  
   throw std::bad_cast();
+#elif defined(MAPIP)
+  maPanic(0, __func__);
 #else
   std::abort();
 #endif
@@ -47,8 +49,10 @@ __cxa_bad_cast ()
 extern "C" void
 __cxa_bad_typeid ()
 {
-#ifdef __EXCEPTIONS  
+#if __EXCEPTIONS  
   throw std::bad_typeid();
+#elif defined(MAPIP)
+  maPanic(0, __func__);
 #else
   std::abort();
 #endif

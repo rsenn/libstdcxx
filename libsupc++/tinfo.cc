@@ -697,6 +697,7 @@ __do_upcast (const __class_type_info *dst, const void *obj_ptr,
     }
   return result.part2dst != __unknown;
 }
+# define offsetof(T,F) ((unsigned int)((char *)&((T *)0L)->F - (char *)0L))
 
 // this is the external interface to the dynamic cast machinery
 extern "C" void *

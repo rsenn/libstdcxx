@@ -36,6 +36,8 @@
 #include <limits>
 #include <bits/atomicity.h>
 
+#include "noexcept.icc"
+
 namespace std 
 {  
   // XXX GLIBCXX_ABI Deprecated
@@ -150,7 +152,7 @@ namespace std
 
   // 27.4.2.5  iword/pword storage
   ios_base::_Words&
-  ios_base::_M_grow_words(int ix, bool iword)
+  ios_base::_M_grow_words(int ix, bool iw)
   {
     // Precondition: _M_word_size <= ix
     int newsize = _S_local_word_size;
@@ -168,7 +170,7 @@ namespace std
 		if (_M_streambuf_state & _M_exception)
 		  __throw_ios_failure(__N("ios_base::_M_grow_words "
 				      "allocation failed"));
-		if (iword)
+		if (iw)
 		  _M_word_zero._M_iword = 0;
 		else
 		  _M_word_zero._M_pword = 0;
@@ -187,7 +189,7 @@ namespace std
 	    _M_streambuf_state |= badbit;
 	    if (_M_streambuf_state & _M_exception)
 	      __throw_ios_failure(__N("ios_base::_M_grow_words is not valid"));
-	    if (iword)
+	    if (iw)
 	      _M_word_zero._M_iword = 0;
 	    else
 	      _M_word_zero._M_pword = 0;

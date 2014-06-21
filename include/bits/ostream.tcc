@@ -39,6 +39,8 @@
 
 #include <locale>
 
+#include "noexcept.icc"
+
 namespace std
 {
   template<typename _CharT, typename _Traits>

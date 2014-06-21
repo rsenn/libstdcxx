@@ -36,7 +36,7 @@
 // Written by Benjamin Kosnik <bkoz@cygnus.com>
 
   // XXX
-  // Define this here so codecvt.cc can have _S_max_size definition.
+  // Define this here so codecvt.cpp can have _S_max_size definition.
 #define _GLIBCXX_USE___ENC_TRAITS 1
 
   // Extension to use icov for dealing with character encodings,

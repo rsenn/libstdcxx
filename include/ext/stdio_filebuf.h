@@ -117,7 +117,7 @@ namespace __gnu_cxx
        *  Note that there is no way for the library to track what you do
        *  with the file, so be careful.
        */
-      std::__c_file*
+      MAHandle
       file() { return this->_M_file.file(); }
     };
 
@@ -140,10 +140,10 @@ namespace __gnu_cxx
 	  this->_M_set_buffer(-1);
 	}
     }
-
+#ifndef MAPIP
   template<typename _CharT, typename _Traits>
     stdio_filebuf<_CharT, _Traits>::
-    stdio_filebuf(std::__c_file* __f, std::ios_base::openmode __mode,
+    stdio_filebuf(MAHandle __f, std::ios_base::openmode __mode,
 		  size_t __size)
     {
       this->_M_file.sys_open(__f, __mode);
@@ -157,6 +157,7 @@ namespace __gnu_cxx
 	  this->_M_set_buffer(-1);
 	}
     }
+#endif
 } // namespace __gnu_cxx
 
 #endif

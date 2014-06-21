@@ -34,6 +34,8 @@
 #include "unwind-cxx.h"
 #include "exception_defines.h"
 
+#include "noexcept.icc"
+
 using namespace __cxxabiv1;
 
 void
@@ -41,9 +43,17 @@ __cxxabiv1::__terminate (std::terminate_handler handler)
 {
   try {
     handler ();
+#ifdef MAPIP
+    maPanic(0, __func__);
+#else
     std::abort ();
+#endif
   } catch (...) {
+#ifdef MAPIP
+    maPanic(0, __func__);
+#else
     std::abort ();
+#endif
   }
 }
 

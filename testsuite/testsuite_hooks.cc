@@ -222,7 +222,7 @@ namespace __gnu_test
       {
 	return std::locale(name);
       }
-#ifdef __EXCEPTIONS
+#if __EXCEPTIONS
     catch (std::runtime_error& ex)
       {
 	// Thrown by generic and gnu implemenation if named locale fails.

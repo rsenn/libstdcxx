@@ -49,7 +49,7 @@
 #include <bits/c++config.h>
 #include <bits/cpp_type_traits.h>
 
-#include <math.h>
+#include <madmath.h>
 
 // Get rid of those macros defined in <math.h> in lieu of real functions.
 #undef abs

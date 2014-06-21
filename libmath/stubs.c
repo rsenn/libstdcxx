@@ -27,7 +27,7 @@
    invalidate any other reasons why the executable file might be covered by
    the GNU General Public License.  */
 
-#include <math.h>
+#include <madmath.h>
 #include "config.h"
 
 /* For targets which do not have support for long double versions,

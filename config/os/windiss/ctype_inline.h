@@ -32,7 +32,7 @@
 //
   
 // ctype bits to be inlined go here. Non-inlinable (ie virtual do_*)
-// functions go in ctype.cc
+// functions go in ctype.cpp
   
 // The following definitions are portable, but insanely slow. If one
 // cares at all about performance, then specialized ctype

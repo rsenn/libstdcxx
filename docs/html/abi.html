@@ -64,7 +64,7 @@ the Application Programing Interface, or API.
   g++ command line options may change the ABI as a side-effect of
   use. Such flags include <code>-fpack-struct</code> and
   <code>-fno-exceptions</code>, but include others: see the complete
-  list in the GCC manual under the heading <a
+  list.cc in the GCC manual under the heading <a
   href="http://gcc.gnu.org/onlinedocs/gcc/Code-Gen-Options.html#Code%20Gen%20Options">Options
   for Code Generation Conventions</a>.
 </p>
@@ -507,7 +507,7 @@ on ELF systems).</p>
 </p>
 
 <pre>
-#include &lt;iostream&gt;
+#include &lt;ios.cctream&gt;
 
 int main()
 { std::cout &lt;&lt; "hello" &lt;&lt; std::endl; return 0; }
@@ -529,7 +529,7 @@ If you see symbols in the resulting output with "GLIBCXX_3" as part
 of the name, then the executable is versioned. Here's an example:
 </p>
 
-   <code>      U _ZNSt8ios_base4InitC1Ev@@GLIBCXX_3.4 </code>
+   <code>      U _ZNSt8ios.cc_base4InitC1Ev@@GLIBCXX_3.4 </code>
 
 <h3 class="left">
   <a name="ABI_allowed">Library allowed ABI changes</a>
@@ -555,7 +555,7 @@ Other allowed changes are possible.
 </h3>
 
 <p>
-The following non-exhaustive list will cause the library major version
+The following non-exhaustive list.cc will cause the library major version
 number to increase, say from "libstdc++.so.3.0.4" to
 "libstdc++.so.4.0.0".
 </p>
@@ -572,7 +572,7 @@ number to increase, say from "libstdc++.so.3.0.4" to
   changing the size, alignment, or layout of types
   specified in the C++ standard. These may not necessarily be
   instantiated or otherwise exported in the library binary, and
-  include all the required locale facets, as well as things like
+  include all the required locale.cc facets, as well as things like
   std::basic_streambuf, et al.
 </li>
 </ul>
@@ -592,14 +592,14 @@ for definitions.
   <dt>Include files have declarations, source files have defines</dt>
 
    <dd> For non-templatized types, such as much of <code>class
-   locale</code>, the appropriate standard C++ include, say
-   <code>locale</code>, can contain full declarations, while various
-   source files (say <code> locale.cc, locale_init.cc,
-   localename.cc</code>) contain definitions.</dd>
+   locale.cc</code>, the appropriate standard C++ include, say
+   <code>locale.cc</code>, can contain full declarations, while various
+   source files (say <code> locale.cc.cpp, locale.cc_init.cpp,
+   locale.ccname.cpp</code>) contain definitions.</dd>
 
   <dt>Extern template on required types</dt>
 
-   <dd>For parts of the standard that have an explicit list of required
+   <dd>For parts of the standard that have an explicit list.cc of required
    instantiations, the GNU extension syntax <code> extern template
    </code> can be used to control where template definitions
    reside. By marking required instantiations as <code> extern
@@ -608,8 +608,8 @@ for definitions.
    template functions can be versioned. This technique is mostly used
    on parts of the standard that require <code> char</code> and <code>
    wchar_t</code> instantiations, and includes <code>
-   basic_string</code>, the locale facets, and the types in <code>
-   iostreams</code>.</dd>
+   basic_string</code>, the locale.cc facets, and the types in <code>
+   ios.cctreams</code>.</dd>
 
  </dl>
  <p> In addition, these techniques have the additional benefit that
@@ -684,7 +684,7 @@ Intel ABI checker. More information can be obtained
 <p>
 Two.
 The second is yet unreleased, but has been announced on the gcc
-mailing list. It is yet unspecified if these tools will be freely
+mailing list.cc. It is yet unspecified if these tools will be freely
 available, and able to be included in a GNU project. Please contact
 Mark Mitchell (mark@codesourcery.com) for more details, and current
 status.
@@ -693,7 +693,7 @@ status.
 <p>
 Three.
 Involves using the vlad.consistency test framework. This has also been
-discussed on the gcc mailing lists.
+discussed on the gcc mailing list.ccs.
 </p>
 
 <p>
@@ -761,9 +761,9 @@ us. We'd like to know about them!
 <p>
 A "C" application, dynamically linked to two shared libraries, liba,
 libb. The dependent library liba is C++ shared library compiled with
-gcc-3.3.x, and uses io, exceptions, locale, etc. The dependent library
+gcc-3.3.x, and uses io, exceptions, locale.cc, etc. The dependent library
 libb is a C++ shared library compiled with gcc-3.4.x, and also uses io,
-exceptions, locale, etc.
+exceptions, locale.cc, etc.
 </p>
 
 <p> As above, libone is constructed as follows: </p>
@@ -772,7 +772,7 @@ exceptions, locale, etc.
 
 %$bld/H-x86-gcc-3.4.0/bin/g++ -shared -Wl,-soname -Wl,libone.so.1 -Wl,-O1 -Wl,-z,defs a.o -o libone.so.1.0.0
 
-%ln -s libone.so.1.0.0 libone.so
+%cp -f libone.so.1.0.0 libone.so
 
 %$bld/H-x86-gcc-3.4.0/bin/g++ -c a.cc
 
@@ -786,7 +786,7 @@ exceptions, locale, etc.
 
 %$bld/H-x86-gcc-3.3.3/bin/g++ -shared -Wl,-soname -Wl,libtwo.so.1 -Wl,-O1 -Wl,-z,defs b.o -o libtwo.so.1.0.0
 
-%ln -s libtwo.so.1.0.0 libtwo.so
+%cp -f libtwo.so.1.0.0 libtwo.so
 
 %$bld/H-x86-gcc-3.3.3/bin/g++ -c b.cc
 

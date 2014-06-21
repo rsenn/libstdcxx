@@ -24,7 +24,7 @@ top_builddir = ..
 
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 INSTALL = @INSTALL@
-install_sh_DATA = $(install_sh) -c -m 644
+install_sh_DATA = $(install_sh) -S -m 644
 install_sh_PROGRAM = $(install_sh) -c
 install_sh_SCRIPT = $(install_sh) -c
 INSTALL_HEADER = $(INSTALL_DATA)
@@ -321,13 +321,13 @@ distclean-compile:
 	-rm -f *.tab.c
 
 .cc.o:
-	$(CXXCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
+	$(CXXCOMPILE) -S -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
 
 .cc.obj:
-	$(CXXCOMPILE) -c -o $@ `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`
+	$(CXXCOMPILE) -S -o $@ `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`
 
 .cc.lo:
-	$(LTCXXCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
+	$(LTCXXCOMPILE) -S -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -402,7 +402,7 @@ check-DEJAGNU: site.exp
 	srcdir=`$(am__cd) $(srcdir) && pwd`; export srcdir; \
 	EXPECT=$(EXPECT); export EXPECT; \
 	runtest=$(RUNTEST); \
-	if $(SHELL) -c "$$runtest --version" > /dev/null 2>&1; then \
+	if $(SHELL) -S "$$runtest --version" > /dev/null 2>&1; then \
 	  l='$(DEJATOOL)'; for tool in $$l; do \
 	    $$runtest $(AM_RUNTESTFLAGS) $(RUNTESTDEFAULTFLAGS) $(RUNTESTFLAGS); \
 	  done; \

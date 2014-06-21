@@ -30,6 +30,8 @@
 #include <cstring>
 #include <locale>
 
+#if LOCALES
+
 namespace std
 {
   using namespace __gnu_cxx;
@@ -47,7 +49,7 @@ namespace std
 	else
 	  {
 	    // Get it from the environment.
-	    char* __env = std::getenv("LC_ALL");
+	    char* __env = 0; //std::getenv("LC_ALL");
 	    // If LC_ALL is set we are done.
 	    if (__env && std::strcmp(__env, "") != 0)
 	      {
@@ -61,7 +63,7 @@ namespace std
 	      {
 		// LANG may set a default different from "C".
 		string __res;
-		char* __env = std::getenv("LANG");
+		char* __env = 0; //std::getenv("LANG");
 		if (!__env || std::strcmp(__env, "") == 0 
 		    || std::strcmp(__env, "C") == 0 
 		    || std::strcmp(__env, "POSIX") == 0)
@@ -75,7 +77,7 @@ namespace std
 		if (__res == "C")
 		  for (; __i < _S_categories_size; ++__i)
 		    {
-		      __env = std::getenv(_S_categories[__i]);
+		      __env = 0; //std::getenv(_S_categories[__i]);
 		      if (__env && std::strcmp(__env, "") != 0 
 			  && std::strcmp(__env, "C") != 0 
 			  && std::strcmp(__env, "POSIX") != 0)
@@ -84,7 +86,7 @@ namespace std
 		else
 		  for (; __i < _S_categories_size; ++__i)
 		    {
-		      __env = std::getenv(_S_categories[__i]);
+		      __env = 0; //std::getenv(_S_categories[__i]);
 		      if (__env && std::strcmp(__env, "") != 0
 			  && __res != __env)
 			break;
@@ -109,7 +111,7 @@ namespace std
 		    __i++;
 		    for (; __i < _S_categories_size; ++__i)
 		      {
-			__env = std::getenv(_S_categories[__i]);
+			__env = 0; //std::getenv(_S_categories[__i]);
 			if (!__env || std::strcmp(__env, "") == 0)
 			  {
 			    __str += _S_categories[__i];
@@ -292,3 +294,4 @@ namespace std
       }
   }
 } // namespace std
+#endif

@@ -24,7 +24,7 @@ top_builddir = ..
 
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 INSTALL = @INSTALL@
-install_sh_DATA = $(install_sh) -c -m 644
+install_sh_DATA = $(install_sh) -S -m 644
 install_sh_PROGRAM = $(install_sh) -c
 install_sh_SCRIPT = $(install_sh) -c
 INSTALL_HEADER = $(INSTALL_DATA)
@@ -320,9 +320,9 @@ LTCOMPILE = $(LIBTOOL) --tag CC --tag disable-shared --mode=compile $(CC) \
 # CXXLINK, just after $(LIBTOOL), so that libtool doesn't have to
 # attempt to infer which configuration to use.
 #
-# We have to put --tag disable-shared after --tag CXX lest things
+# We have to put --tag disable-shared after lest things
 # CXX undo the affect of disable-shared.
-LTCXXCOMPILE = $(LIBTOOL) --tag CXX --tag disable-shared \
+LTCXXCOMPILE = $(LIBTOOL) --tag disable-shared \
 	       --mode=compile $(CXX) $(TOPLEVEL_INCLUDES) \
 	       $(AM_CPPFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(AM_CXXFLAGS)
 
@@ -333,7 +333,7 @@ LTCXXCOMPILE = $(LIBTOOL) --tag CXX --tag disable-shared \
 # course is problematic at this point.  So, we get the top-level
 # directory to configure libstdc++-v3 to use gcc as the C++
 # compilation driver.
-CXXLINK = $(LIBTOOL) --tag CXX --tag disable-shared \
+CXXLINK = $(LIBTOOL) --tag disable-shared \
 	  --mode=link $(CXX) \
 	  $(OPT_LDFLAGS) $(SECTION_LDFLAGS) $(AM_CXXFLAGS) $(LDFLAGS) -o $@
 
@@ -345,12 +345,41 @@ LTLIBRARIES = $(noinst_LTLIBRARIES) $(toolexeclib_LTLIBRARIES)
 
 libsupc___la_LDFLAGS =
 libsupc___la_LIBADD =
-am__objects_1 = del_op.lo del_opnt.lo del_opv.lo del_opvnt.lo \
-	eh_alloc.lo eh_aux_runtime.lo eh_catch.lo eh_exception.lo \
-	eh_globals.lo eh_personality.lo eh_term_handler.lo \
-	eh_terminate.lo eh_throw.lo eh_type.lo eh_unex_handler.lo \
-	guard.lo new_handler.lo new_op.lo new_opnt.lo new_opv.lo \
-	new_opvnt.lo pure.lo tinfo.lo tinfo2.lo vec.lo vterminate.lo
+
+eh_exception.lo: CFLAGS += -frtti
+
+am__objects_disabled	= \
+	del_op.lo \
+	del_opnt.lo \
+	del_opv.lo \
+	del_opvnt.lo \
+	guard.lo \
+	new_handler.lo \
+	new_op.lo \
+	new_opnt.lo \
+	new_opv.lo \
+	\
+	new_opvnt.lo \
+	pure.lo
+
+am__objects_1	= \
+	eh_alloc.lo \
+	eh_aux_runtime.lo \
+	eh_catch.lo \
+	eh_exception.lo \
+	\
+	eh_globals.lo \
+	eh_personality.lo \
+	eh_term_handler.lo \
+	\
+	eh_terminate.lo \
+	eh_throw.lo \
+	eh_type.lo \
+	eh_unex_handler.lo \
+	tinfo.lo \
+	tinfo2.lo \
+	vec.lo \
+	vterminate.lo
 am__objects_2 = cp-demangle.lo
 am_libsupc___la_OBJECTS = $(am__objects_1) $(am__objects_2)
 libsupc___la_OBJECTS = $(am_libsupc___la_OBJECTS)
@@ -436,22 +465,22 @@ distclean-compile:
 	-rm -f *.tab.c
 
 .c.o:
-	$(COMPILE) -c `test -f '$<' || echo '$(srcdir)/'`$<
+	$(COMPILE) -S `test -f '$<' || echo '$(srcdir)/'`$<
 
 .c.obj:
-	$(COMPILE) -c `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`
+	$(COMPILE) -S `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`
 
 .c.lo:
-	$(LTCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
+	$(LTCOMPILE) -S -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
 
 .cc.o:
-	$(CXXCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
+	$(CXXCOMPILE) -S -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
 
 .cc.obj:
-	$(CXXCOMPILE) -c -o $@ `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`
+	$(CXXCOMPILE) -S -o $@ `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`
 
 .cc.lo:
-	$(LTCXXCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
+	$(LTCXXCOMPILE) -S -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -647,9 +676,9 @@ cp-demangle.c:
 	rm -f $@
 	$(LN_S) $(toplevel_srcdir)/libiberty/cp-demangle.c $@
 cp-demangle.lo: cp-demangle.c
-	$(LTCOMPILE) -DIN_GLIBCPP_V3 -Wno-error -c $<
+	$(LTCOMPILE) -DIN_GLIBCPP_V3 -Wno-error -S $<
 cp-demangle.o: cp-demangle.c
-	$(C_COMPILE) -DIN_GLIBCPP_V3 -Wno-error -c $<
+	$(C_COMPILE) -DIN_GLIBCPP_V3 -Wno-error -S $<
 
 # We have to have rules modified from the default to counteract SUN make
 # prepending each of $(glibcxxinstall_HEADERS) with VPATH below.
