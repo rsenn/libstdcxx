@@ -1,5 +1,5 @@
 #include "fstream"
-#include "ofstream"
+#include "ostream"
 
 using namespace std;
 

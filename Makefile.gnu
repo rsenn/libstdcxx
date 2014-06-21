@@ -1,6 +1,7 @@
 MOSYNCDIR ?= /opt/MoSync-4.0-Alpha
-PROJECT = libstdc++v3
+PROJECT = libstdcxx
 VERSION = 3.4.6
+PLATFORM = Android
 
 PIPE_TOOL = "$(MOSYNCDIR)/bin/pipe-tool"
 BUNDLE = "$(MOSYNCDIR)/bin/Bundle"
@@ -11,6 +12,7 @@ LN_S = ln -s
 TARGET ?= pipe
 CONFIG ?= release
 
+ANDROID_VERSION = 16
 ANDROID_KEYSTORE = mosync.keystore
 ANDROID_STOREPASS = default
 ANDROID_KEYPASS = default
@@ -41,6 +43,7 @@ endif
 #LIBS += mautil.lib mafs.lib mtxml.lib
 APK = $(PROJECT).apk
 OUTPUT_DIR = build/$(TARGET)_$(CONFIG)
+CURRENT_DIR := $(shell cygpath -m "$(SOURCE_DIR)" 2>/dev/null || echo .)
 
 VPATH = $(OUTPUT_DIR):.
 vpath $(OUTPUT_DIR) .
@@ -117,8 +120,9 @@ ifeq ($(CONFIG),debug)
 endif
 	$(PACKAGE) $(PACKAGEFLAGS) \
 		-t platform \
-		-p "$(CURRENT_DIR)/$(OUTPUT_DIR)/program" \
-		-d "$(CURRENT_DIR)/$(OUTPUT_DIR)" \
+		-i "$(CURRENT_DIR)/libstdc++.icon" \
+		-p "$(OUTPUT_DIR)/program" \
+		-d "$(OUTPUT_DIR)" \
 		-m "$(PLATFORM)/$(PLATFORM)" \
 		--vendor BuiltWithMoSyncSDK \
 		-n "$(PROJECT)" \
