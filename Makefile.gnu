@@ -120,7 +120,7 @@ ifeq ($(CONFIG),debug)
 endif
 	$(PACKAGE) $(PACKAGEFLAGS) \
 		-t platform \
-		-i "$(CURRENT_DIR)/libstdc++.icon" \
+		-i "$(CURRENT_DIR)/libstdcxx.icon" \
 		-p "$(OUTPUT_DIR)/program" \
 		-d "$(OUTPUT_DIR)" \
 		-m "$(PLATFORM)/$(PLATFORM)" \

@@ -14,6 +14,8 @@
 <property key="build.prefs:additional.libraries/Release" value="mastd.lib"/>
 <property key="build.prefs:additional.library.paths/Debug" value="%mosync-home%/lib/pipe_debug"/>
 <property key="build.prefs:additional.library.paths/Release" value="%mosync-home%/lib/pipe_release"/>
+<property key="build.prefs:app.name/Debug" value="libstdcxx"/>
+<property key="build.prefs:app.name/Release" value="libstdcxx"/>
 <property key="build.prefs:app.output.path/Debug" value="pipe_debug/"/>
 <property key="build.prefs:app.output.path/Release" value="pipe_release/"/>
 <property key="build.prefs:extra.link.sw/Debug" value=""/>
