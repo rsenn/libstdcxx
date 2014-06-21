@@ -35,6 +35,8 @@
 
 #include <locale>
 
+#if LOCALES
+
 namespace std
 {
   template<> 
@@ -109,3 +111,4 @@ namespace std
     { delete _M_data; }
 #endif
 }
+#endif // LOCALES

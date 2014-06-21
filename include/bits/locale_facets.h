@@ -1518,8 +1518,7 @@ namespace std
       ctype_byname(const char* __s, size_t __refs = 0);
 
     protected:
-      virtual
-      ~ctype_byname() { };
+      virtual ~ctype_byname();
     };
 
   // 22.2.1.4  Class ctype_byname specializations.
@@ -1528,6 +1527,9 @@ namespace std
 
   template<>
     ctype_byname<wchar_t>::ctype_byname(const char*, size_t refs);
+
+  template<>
+    ctype_byname<char>::~ctype_byname();
 
   // 22.2.1.5  Template class codecvt
   #include <bits/codecvt.h>
@@ -2188,6 +2190,8 @@ namespace std
   template<typename _CharT, typename _InIter>
     locale::id num_get<_CharT, _InIter>::id;
 
+  template<>
+    locale::id num_get<char, std::istreambuf_iterator<char> >::id;
 
   /**
    *  @brief  Facet for converting numbers to strings.
@@ -2445,8 +2449,10 @@ namespace std
       //@}
     };
 
-  template <typename _CharT, typename _OutIter>
+  template<typename _CharT, typename _OutIter>
     locale::id num_put<_CharT, _OutIter>::id;
+  template<>
+    locale::id num_put<char, std::ostreambuf_iterator<char> >::id;
 
 
   /**

@@ -1,7 +1,7 @@
-#include "ustl/fstream.h"
-#include "ustl/ofstream.h"
+#include "fstream"
+#include "ofstream"
 
-using namespace ustl;
+using namespace std;
 
 extern "C"
 int MAMain() {

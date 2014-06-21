@@ -134,16 +134,13 @@ namespace std
 	if (!__caches[__i])
 	  {
 	    __numpunct_cache<_CharT>* __tmp = NULL;
-	    try
-	      {
+	    //try {
 		__tmp = new __numpunct_cache<_CharT>;
 		__tmp->_M_cache(__loc);
-	      }
-	    catch(...)
-	      {
-		delete __tmp;
-		__throw_exception_again;
-	      }
+	      //} catch(...) {
+		//delete __tmp;
+		//__throw_exception_again;
+	      //}
 	    __loc._M_impl->_M_install_cache(__tmp, __i);
 	  }
 	return static_cast<const __numpunct_cache<_CharT>*>(__caches[__i]);
@@ -161,16 +158,13 @@ namespace std
 	if (!__caches[__i])
 	  {
 	    __moneypunct_cache<_CharT, _Intl>* __tmp = NULL;
-	    try
-	      {
+	    //try {
 		__tmp = new __moneypunct_cache<_CharT, _Intl>;
 		__tmp->_M_cache(__loc);
-	      }
-	    catch(...)
-	      {
-		delete __tmp;
-		__throw_exception_again;
-	      }
+	     //} catch(...) {
+		//delete __tmp;
+		//__throw_exception_again;
+		//}
 	    __loc._M_impl->_M_install_cache(__tmp, __i);
 	  }
 	return static_cast<

@@ -35,6 +35,7 @@
 
 #include <locale>
 
+#if LOCALES
 namespace std
 {
   // NB: The other ctype<char> specializations are in src/locale.cpp and
@@ -49,6 +50,9 @@ namespace std
 	  this->_S_create_c_locale(this->_M_c_locale_ctype, __s); 
 	}
     }
+
+  template<>
+  ctype_byname<char>::~ctype_byname() {}
 
 #ifdef _GLIBCXX_USE_WCHAR_T  
   ctype<wchar_t>::__wmask_type
@@ -265,3 +269,4 @@ namespace std
   }
 #endif //  _GLIBCXX_USE_WCHAR_T
 }
+#endif // LOCALES

@@ -45,7 +45,8 @@ OUTPUT_DIR = build/$(TARGET)_$(CONFIG)
 VPATH = $(OUTPUT_DIR):.
 vpath $(OUTPUT_DIR) .
 
-SOURCES = $(wildcard config/io/*.cpp  libsupc++/*.cpp src/*.cpp)
+LIBSOURCES = $(wildcard config/io/*.cpp  libsupc++/*.cpp src/*.cpp) MAMain.cpp
+SOURCES = $(LIBSOURCES) MAMain.cpp
 #SOURCES += $(wildcard config/locale/gnu/*.cpp)
 #SOURCES += $(wildcard config/locale/ieee_1003.1-2001/*.cpp)
 #SOURCES += $(wildcard config/locale/generic/*.cpp) 

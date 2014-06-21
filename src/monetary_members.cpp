@@ -35,6 +35,8 @@
 
 #include <locale>
 
+#if LOCALES
+
 namespace std
 {
   // Construct and return valid pattern consisting of some combination of:
@@ -175,3 +177,4 @@ namespace std
     { delete _M_data; }
 #endif
 }
+#endif // LOCALES

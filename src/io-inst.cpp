@@ -35,6 +35,9 @@
 #include <ios>
 #include <iomanip>
 
+template<> std::locale::id std::num_put< char, std::ostreambuf_iterator<char,std::char_traits<char> > >::id = std::locale::id();
+template<> std::locale::id std::num_get< char, std::istreambuf_iterator<char,std::char_traits<char> > >::id = std::locale::id();
+
 namespace std
 {
   // basic_ios

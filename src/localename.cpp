@@ -170,13 +170,13 @@ namespace std
     __cat = _S_normalize_category(__cat);  
     _M_impl = new _Impl(*__base._M_impl, 1);  
 
-    try 
+    //try 
       { _M_impl->_M_replace_categories(__add._M_impl, __cat); }
-    catch (...) 
-      { 
-	_M_impl->_M_remove_reference(); 
-	__throw_exception_again;
-      }
+    //catch (...) 
+    //  { 
+	//_M_impl->_M_remove_reference(); 
+	//__throw_exception_again;
+     // }
   }
 
   // Construct named _Impl.
@@ -190,7 +190,7 @@ namespace std
     __c_locale __cloc;
     locale::facet::_S_create_c_locale(__cloc, __s);
 
-    try
+ //   try
       {
 	_M_facets = new const facet*[_M_facets_size];
 	for (size_t __i = 0; __i < _M_facets_size; ++__i)
@@ -262,12 +262,12 @@ namespace std
 #endif	  
 	locale::facet::_S_destroy_c_locale(__cloc);
       }
-    catch(...)
-      {
-	locale::facet::_S_destroy_c_locale(__cloc);
-	this->~_Impl();
-	__throw_exception_again;
-      }	
+//    catch(...)
+//      {
+//	locale::facet::_S_destroy_c_locale(__cloc);
+//	this->~_Impl();
+//	__throw_exception_again;
+//      }	
   }
 
   void

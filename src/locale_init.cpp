@@ -35,7 +35,6 @@
 #include <bits/atomicity.h>
 #include <bits/concurrence.h>
 
-#if LOCALES
 
 namespace __gnu_internal
 {
@@ -101,11 +100,15 @@ namespace std
 
   locale::locale() throw() : _M_impl(0)
   { 
+#if LOCALES
     _S_initialize(); 
     __gnu_cxx::lock sentry(__gnu_internal::locale_mutex);
     _S_global->_M_add_reference();
     _M_impl = _S_global;
+#endif
   }
+
+#if LOCALES
 
   locale
   locale::global(const locale& __other)
@@ -348,6 +351,8 @@ namespace std
     _M_caches[__timepunct<wchar_t>::id._M_id()] = __tpw;
 #endif
   }
+#endif // LOCALES
+
 } // namespace std
 
-#endif
+

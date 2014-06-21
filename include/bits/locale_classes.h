@@ -453,9 +453,9 @@ namespace std
     void
     operator=(const id&);  // Not defined.
 
-    id(const id&);  // Not defined.
-
   public:
+//    id(const id&);  // Not defined.
+
     // NB: This class is always a static data member, and thus can be
     // counted on to be zero-initialized.
     /// Constructor.
