@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>libstdc++v3</name>
+	<name>libstdc++</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -18,7 +18,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1400134689320</id>
+			<id>1403390069003</id>
 			<name></name>
 			<type>6</type>
 			<matcher>
