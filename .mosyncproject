@@ -8,38 +8,48 @@
 </filter>
 </criteria>
 <properties>
+<property key="build.prefs:additional.include.paths" value="%mosync-home%/include"/>
 <property key="build.prefs:additional.include.paths.native/Debug" value="include"/>
 <property key="build.prefs:additional.include.paths.native/Release" value="include"/>
-<property key="build.prefs:additional.include.paths/Debug" value="include, %mosync-home%/include"/>
-<property key="build.prefs:additional.include.paths/Release" value="include, %mosync-home%/include"/>
-<property key="build.prefs:additional.libraries/Debug" value="mastd.lib"/>
-<property key="build.prefs:additional.libraries/Release" value="mastd.lib"/>
+<property key="build.prefs:additional.include.paths/Debug" value="include, %mosync-home%/include/maui-revamp, %mosync-home%/include"/>
+<property key="build.prefs:additional.include.paths/Release" value="include, %mosync-home%/include/maui-revamp, %mosync-home%/include"/>
+<property key="build.prefs:additional.libraries" value="mastd.lib"/>
+<property key="build.prefs:additional.libraries/Debug" value="mastd.lib, mautil.lib, maui-revamp.lib"/>
+<property key="build.prefs:additional.libraries/Release" value="mastd.lib, mautil.lib, maui-revamp.lib"/>
+<property key="build.prefs:additional.library.paths" value="%mosync-home%/lib/pipe"/>
 <property key="build.prefs:additional.library.paths/Debug" value="%mosync-home%/lib/pipe_debug"/>
 <property key="build.prefs:additional.library.paths/Release" value="%mosync-home%/lib/pipe_release"/>
 <property key="build.prefs:app.name/Debug" value="libstdcxx"/>
 <property key="build.prefs:app.name/Release" value="libstdcxx"/>
 <property key="build.prefs:app.output.path/Debug" value="pipe_debug/"/>
 <property key="build.prefs:app.output.path/Release" value="pipe_release/"/>
+<property key="build.prefs:app.permissions" value="File\ Storage Internet\ Access Vibration"/>
 <property key="build.prefs:extra.link.sw/Debug" value=""/>
 <property key="build.prefs:extra.link.sw/Release" value=""/>
 <property key="build.prefs:extra.res.sw/Debug" value=""/>
 <property key="build.prefs:extra.res.sw/Release" value=""/>
-<property key="build.prefs:gcc.switches/Debug" value="-fno-exceptions -fno-rtti -DLOCALES=0 -O0 -DPLATFORM_%platform-family% -DVARIANT_%platform-variant%"/>
+<property key="build.prefs:gcc.switches/Debug" value="-fno-exceptions -fno-rtti -DDEBUG -O0 -DPLATFORM_%platform-family% -DVARIANT_%platform-variant%"/>
 <property key="build.prefs:gcc.switches/Release" value="-fno-exceptions -fno-rtti -DLOCALES=0 -O2 -DPLATFORM_%platform-family% -DVARIANT_%platform-variant%"/>
 <property key="build.prefs:gcc.warnings/Debug" value="2"/>
 <property key="build.prefs:gcc.warnings/Release" value="2"/>
+<property key="build.prefs:ignore.default.include.paths" value="true"/>
 <property key="build.prefs:ignore.default.include.paths/Debug" value="true"/>
 <property key="build.prefs:ignore.default.include.paths/Release" value="true"/>
+<property key="build.prefs:ignore.default.libraries" value="true"/>
 <property key="build.prefs:ignore.default.libraries/Debug" value="true"/>
 <property key="build.prefs:ignore.default.libraries/Release" value="true"/>
+<property key="build.prefs:ignore.default.library.paths" value="true"/>
 <property key="build.prefs:ignore.default.library.paths/Debug" value="true"/>
 <property key="build.prefs:ignore.default.library.paths/Release" value="true"/>
 <property key="build.prefs:output.static.recompilation" value="interpreted"/>
-<property key="build.prefs:project.type" value=""/>
+<property key="build.prefs:project.type" value="app"/>
 <property key="dependency.strategy" value="0"/>
 <property key="excludes/Debug" value="testsuite libmath libsupc++"/>
 <property key="excludes/Release" value="testsuite libmath libsupc++"/>
 <property key="profile.mgr.type" value="0"/>
+<property key="symbian.uids:uid.s60v2uid" value="0x0657212b"/>
+<property key="symbian.uids:uid.s60v3uid" value="0xe53b2162"/>
 <property key="template.id" value="project.c"/>
+<property key="winmobilecs:guid" value="f6041f50-dbda-1031-80ef-6b4028c8c655"/>
 </properties>
 </project>

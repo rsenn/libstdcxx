@@ -19,13 +19,14 @@ ANDROID_STOREPASS = default
 ANDROID_KEYPASS = default
 
 DEFS = -DMAPIP 
+CPPFLAGS =  -I"$(MOSYNCDIR)/include/maui-revamp"
 
 ifeq ($(TARGET),newlib)
 DEFS += -DNEWLIB
-CPPFLAGS = -I"$(MOSYNCDIR)/include/newlib/stlport" -I"$(MOSYNCDIR)/include/newlib" 
+CPPFLAGS += -I"$(MOSYNCDIR)/include/newlib/stlport" -I"$(MOSYNCDIR)/include/newlib" 
 LIBS = stlport.lib newlib.lib
 else
-CPPFLAGS = -I"$(MOSYNCDIR)/include"
+CPPFLAGS += -I"$(MOSYNCDIR)/include"
 LIBS = mastd.lib
 endif
 
@@ -41,7 +42,8 @@ else
 CFLAGS = -O2 -Wall 
 endif
 
-#LIBS += mautil.lib mafs.lib mtxml.lib
+LIBS += maui-revamp.lib mautil.lib 
+
 APK = $(PROJECT).apk
 BUILD_DIR := build/$(TARGET)_$(CONFIG)
 OUTPUT_DIR := $(BUILD_DIR)/$(PLATFORM)
