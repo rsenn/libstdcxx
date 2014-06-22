@@ -2262,16 +2262,16 @@ namespace std
 
 
   // Generic version does nothing.
-  template<typename _CharT>
-    int
-    collate<_CharT>::_M_compare(const _CharT*, const _CharT*) const
-    { return 0; }
+//  template<typename _CharT>
+//    int
+//    collate<_CharT>::_M_compare(const _CharT*, const _CharT*) const
+//    { return 0; }
 
   // Generic version does nothing.
-  template<typename _CharT>
-    size_t
-    collate<_CharT>::_M_transform(_CharT*, const _CharT*, size_t) const
-    { return 0; }
+//  template<typename _CharT>
+//    size_t
+//    collate<_CharT>::_M_transform(_CharT*, const _CharT*, size_t) const
+//    { return 0; }
 
   template<typename _CharT>
     int

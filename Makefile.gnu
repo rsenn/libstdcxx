@@ -6,6 +6,7 @@ PLATFORM = Android
 PIPE_TOOL = "$(MOSYNCDIR)/bin/pipe-tool"
 BUNDLE = "$(MOSYNCDIR)/bin/Bundle"
 PACKAGE = "$(MOSYNCDIR)/bin/package"
+ADB = "$(MOSYNCDIR)/bin/android/adb"
 CC = "$(MOSYNCDIR)/bin/xgcc"
 LN_S = ln -s
 
@@ -121,8 +122,8 @@ endif
 	$(PACKAGE) $(PACKAGEFLAGS) \
 		-t platform \
 		-i "$(CURRENT_DIR)/libstdcxx.icon" \
-		-p "$(OUTPUT_DIR)/program" \
-		-d "$(OUTPUT_DIR)" \
+		-p "$(CURRENT_DIR)/$(OUTPUT_DIR)/program" \
+		-d "$(CURRENT_DIR)/$(OUTPUT_DIR)" \
 		-m "$(PLATFORM)/$(PLATFORM)" \
 		--vendor BuiltWithMoSyncSDK \
 		-n "$(PROJECT)" \
@@ -138,6 +139,24 @@ endif
 		--android-install-location internalOnly
 
 install: all
+	$(ADB) install -r $(OUTPUT_DIR)/$(APK)	
 
+start: all logclear install
+	$(ADB) shell am start -n com.mosync.app_$(PROJECT)/com.mosync.app_$(PROJECT).MoSync
+	$(ADB) logcat $(LOGCAT_FILTER) || { exit 0; }
+
+LOGCAT_FILTER = -s -b main maWriteLog:D CordovaWebView:D WebViewChromium:D JsMessageQueue:D MoSync:D @@MoSync:D ActivityManager:D WindowState:D MoSyncLocation.onLocationChanged:D GCoreUlr:D
+#LOGCAT_FILTER += PackageManager:D
+
+logclear:
+	$(ADB) logcat -c
+logtail: logclear
+	$(ADB) logcat $(LOGCAT_FILTER) || { exit 0; }
+logcat:
+	$(ADB) logcat -d $(LOGCAT_FILTER)
+logpull:
+	$(ADB) logcat -d $(LOGCAT_FILTER) >CrowdGuard.log
+	$(ADB) logcat -c
+	
 $(foreach src,$(SOURCES), $(eval $(patsubst %.cpp,$(OUTPUT_DIR)/%.s,$(notdir $(src))): $(src)$(NL)	$$(CC) $$(DEFS) $$(CPPFLAGS) $$(CFLAGS) -S -o $$@ $$<	))
 
