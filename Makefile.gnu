@@ -43,7 +43,8 @@ endif
 
 #LIBS += mautil.lib mafs.lib mtxml.lib
 APK = $(PROJECT).apk
-OUTPUT_DIR = build/$(TARGET)_$(CONFIG)
+BUILD_DIR := build/$(TARGET)_$(CONFIG)
+OUTPUT_DIR := $(BUILD_DIR)/$(PLATFORM)
 CURRENT_DIR := $(shell cygpath -m "$(SOURCE_DIR)" 2>/dev/null || echo .)
 
 VPATH = $(OUTPUT_DIR):.
@@ -54,13 +55,18 @@ SOURCES = $(LIBSOURCES) MAMain.cpp
 #SOURCES += $(wildcard config/locale/gnu/*.cpp)
 #SOURCES += $(wildcard config/locale/ieee_1003.1-2001/*.cpp)
 #SOURCES += $(wildcard config/locale/generic/*.cpp) 
-HEADERS = $(wildcard acconfig.h/*.h config/cpu/alpha/*.h config/cpu/sparc/*.h config/cpu/generic/*.h config/cpu/s390/*.h config/cpu/hppa/*.h config/cpu/cris/*.h config/cpu/i386/*.h config/cpu/m68k/*.h config/cpu/i486/*.h config/cpu/mips/*.h config/cpu/ia64/*.h config/cpu/powerpc/*.h config/locale/generic/*.h config/locale/ieee_1003.1-2001/*.h config/locale/gnu/*.h config/allocator/*.h config/io/*.h config/os/newlib/*.h config/os/generic/*.h config/os/vxworks/*.h config/os/windiss/*.h config/os/aix/*.h config/os/gnu-linux/*.h config/os/solaris/solaris2.5/*.h config/os/solaris/solaris2.7/*.h config/os/solaris/solaris2.6/*.h config/os/tpf/*.h config/os/bsd/freebsd/*.h config/os/bsd/netbsd/*.h config/os/hpux/*.h config/os/mingw32/*.h config/os/qnx/qnx6.1/*.h config/os/irix/*.h config/os/irix/irix5.2/*.h config/os/irix/irix6.5/*.h config/os/irix/*.h config/os/djgpp/*.h include/ext/*.h include/std/*.h include/backward/*.h include/c_compatibility/*.h include/*.h include/debug/*.h include/c/*.h include/bits/*.h include/c_std/*.h libmath/*.h libsupc++/*.h)
+HEADERS = $(wildcard $(addprefix include/,algorithm backward/*.h backward/strstream bits/*.h bits/*.tcc bits/c++config bitset c/*.h c_compatibility/*.h c_std/*.h c_std/*.tcc cassert cctype cerrno cfloat ciso646 climits clocale cmath complex csetjmp csignal cstdarg cstddef cstdio cstdlib cstring ctime cwchar cwctype debug/*.h debug/*.tcc debug/bitset debug/deque debug/hash_map debug/hash_set debug/list debug/map debug/set debug/string debug/vector deque ext/*.h ext/algorithm ext/functional ext/hash_map ext/hash_set ext/iterator ext/memory ext/numeric ext/rb_tree ext/rope ext/slist fstream functional iomanip ios iosfwd iostream istream iterator limits list locale map mapip/bits/*.h memory noexcept.icc numeric ostream queue set sstream stack std/*.h stdc++.h stdexcept streambuf string utility valarray vector))
 #SOURCES += $(wildcard libmath/*.c)
 ASMSRCS = $(patsubst %.cpp,$(OUTPUT_DIR)/%.s,$(notdir $(SOURCES)))
 OBJECTS = $(patsubst %.cpp,$(OUTPUT_DIR)/%.o,$(notdir $(SOURCES)))
 PREPROCESSED = $(patsubst %.cpp,$(OUTPUT_DIR)/%.e,$(notdir $(SOURCES)))
 CLEANFILES = $(ASMSRCS) $(OUTPUT_DIR)/*.o 
 LIBRARY = stdc++.lib
+
+
+ifeq ($(CONFIG),debug)
+DBGSUFFIX = D
+endif
 
 define NL
 
@@ -69,7 +75,26 @@ endef
 
 GENERATED = $(OUTPUT_DIR)/bits/basic_file.h $(OUTPUT_DIR)/bits/c++config.h $(OUTPUT_DIR)/bits/os_defines.h
 
-all: $(OUTPUT_DIR) $(OUTPUT_DIR)/$(LIBRARY) $(OUTPUT_DIR)/program $(OUTPUT_DIR)/$(APK)
+.PHONY: all install install-libs install-headers preprocess depend clean install-apk start logclear logtail logcat logpull
+
+all: $(OUTPUT_DIR) $(BUILD_DIR)/$(LIBRARY) $(OUTPUT_DIR)/program $(OUTPUT_DIR)/$(APK)
+
+install: install-headers install-libs
+
+install-libs:
+#	install -d "$(MOSYNCDIR)/lib/$(TARGET)_$(CONFIG)"
+	install -m 644 "$(BUILD_DIR)/stdc++.lib" "$(MOSYNCDIR)/lib/$(TARGET)/stdc++$(DBGSUFFIX).lib"
+	install -m 644 "$(BUILD_DIR)/stdc++.lib" "$(MOSYNCDIR)/lib/$(TARGET)_$(CONFIG)/stdc++.lib"
+
+install-headers:
+	@echo "Install:" 1>&2
+	@for H in $(subst include/,,$(HEADERS)); do \
+		F="$(MOSYNCDIR)/include/c++/3.4.6/$$H"; \
+		D=`dirname "$$F"`; \
+		C="install -d \"$$D\"; install -m  644 \"include/$$H\" \"$$D\""; \
+		echo "$$C" 1>&2; \
+		eval "$$C"; \
+	done
 
 preprocess: $(PREPROCESSED)
 
@@ -98,7 +123,7 @@ $(OUTPUT_DIR)/bits/c++config.h: include/bits/c++config
 $(OUTPUT_DIR):
 	mkdir -p $@
 
-$(OUTPUT_DIR)/$(LIBRARY): $(ASMSRCS) | $(GENERATED)
+$(BUILD_DIR)/$(LIBRARY): $(ASMSRCS) | $(GENERATED)
 	$(PIPE_TOOL) -L $@ $^
 
 %.s: %.cpp $(HEADERS)
@@ -138,10 +163,10 @@ endif
 		--android-keypass "$(ANDROID_KEYPASS)" \
 		--android-install-location internalOnly
 
-install: all
+install-apk: all
 	$(ADB) install -r $(OUTPUT_DIR)/$(APK)	
 
-start: all logclear install
+start: all logclear install-apk
 	$(ADB) shell am start -n com.mosync.app_$(PROJECT)/com.mosync.app_$(PROJECT).MoSync
 	$(ADB) logcat $(LOGCAT_FILTER) || { exit 0; }
 
@@ -159,4 +184,5 @@ logpull:
 	$(ADB) logcat -c
 	
 $(foreach src,$(SOURCES), $(eval $(patsubst %.cpp,$(OUTPUT_DIR)/%.s,$(notdir $(src))): $(src)$(NL)	$$(CC) $$(DEFS) $$(CPPFLAGS) $$(CFLAGS) -S -o $$@ $$<	))
+
 

@@ -9,16 +9,20 @@ using namespace std;
 extern "C"
 int MAMain() {
 
-	string s = "blah";
-
-	lprintfln("test: %s", s.c_str());
+  string s = "blah";
 
   return 0;
   
+
   MAEvent ev;
   
-  while(maGetEvent(&ev) == 0) {
+  for(;;) {
+		while(maGetEvent(&ev) == 0) {
 
+		}
+		maWait(1000);
+	  lprintfln("test: %s", s.c_str());
   }
+
   return 0;
 }
