@@ -31,16 +31,35 @@
 #define _GLIBCXX_ATOMICITY_H	1
 
 #include <bits/atomic_word.h>
-  
+
 namespace __gnu_cxx
 {
-  _Atomic_word 
+#ifdef MAPIP
+
+	static inline _Atomic_word __attribute__((always_inline))
+  __exchange_and_add(_Atomic_word* __mem, int __val) {
+    _Atomic_word __result;
+    __result = *__mem;
+    *__mem += __val;
+    return __result;
+  }
+
+  static inline void __attribute__ ((always_inline))
+  __atomic_add(_Atomic_word* __mem, int __val)
+  { __exchange_and_add(__mem, __val); }
+
+#else
+
+	_Atomic_word
   __attribute__ ((__unused__))
   __exchange_and_add(volatile _Atomic_word* __mem, int __val);
 
   void
   __attribute__ ((__unused__))
   __atomic_add(volatile _Atomic_word* __mem, int __val);
+
+#endif
+
 } // namespace __gnu_cxx
 
-#endif 
+#endif

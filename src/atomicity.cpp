@@ -37,6 +37,7 @@ namespace __gnu_internal
 
 namespace __gnu_cxx
 {
+#ifndef MAPIP
   _Atomic_word
   __attribute__ ((__unused__))
   __exchange_and_add(volatile _Atomic_word* __mem, int __val)
@@ -48,9 +49,9 @@ namespace __gnu_cxx
     __glibcxx_mutex_unlock(__gnu_internal::atomic_mutex);
     return __result;
   }
-
   void
   __attribute__ ((__unused__))
   __atomic_add(volatile _Atomic_word* __mem, int __val)
   { __exchange_and_add(__mem, __val); }
+#endif
 } // namespace __gnu_cxx
