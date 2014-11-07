@@ -1518,7 +1518,7 @@ namespace std
       ctype_byname(const char* __s, size_t __refs = 0);
 
     protected:
-      virtual ~ctype_byname();
+      virtual ~ctype_byname() {}
     };
 
   // 22.2.1.4  Class ctype_byname specializations.
@@ -1528,8 +1528,8 @@ namespace std
   template<>
     ctype_byname<wchar_t>::ctype_byname(const char*, size_t refs);
 
-  template<>
-    ctype_byname<char>::~ctype_byname();
+  //template<>
+  //  ctype_byname<char>::~ctype_byname();
 
   // 22.2.1.5  Template class codecvt
   #include <bits/codecvt.h>
@@ -1797,7 +1797,7 @@ namespace std
     protected:
       /// Destructor.
       virtual
-      ~numpunct();
+      ~numpunct() {}
 
       /**
        *  @brief  Return decimal point character.
@@ -1864,28 +1864,28 @@ namespace std
 
       // For use at construction time only.
       void
-      _M_initialize_numpunct(__c_locale __cloc = NULL);
+      _M_initialize_numpunct(__c_locale __cloc = NULL) {}
     };
 
   template<typename _CharT>
     locale::id numpunct<_CharT>::id;
 
-  template<>
-    numpunct<char>::~numpunct();
-
-  template<>
-    void
-    numpunct<char>::_M_initialize_numpunct(__c_locale __cloc);
-
-#ifdef _GLIBCXX_USE_WCHAR_T
-  template<>
-    numpunct<wchar_t>::~numpunct();
-
-  template<>
-    void
-    numpunct<wchar_t>::_M_initialize_numpunct(__c_locale __cloc);
-#endif
-
+//  template<>
+//    numpunct<char>::~numpunct();
+//
+//  template<>
+//    void
+//    numpunct<char>::_M_initialize_numpunct(__c_locale __cloc);
+//
+//#ifdef _GLIBCXX_USE_WCHAR_T
+//  template<>
+//    numpunct<wchar_t>::~numpunct();
+//
+//  template<>
+//    void
+//    numpunct<wchar_t>::_M_initialize_numpunct(__c_locale __cloc);*/
+//#endif
+//
   template<typename _CharT>
     class numpunct_byname : public numpunct<_CharT>
     {
@@ -2564,10 +2564,15 @@ namespace std
 
       // Used to abstract out _CharT bits in virtual member functions, below.
       int
-      _M_compare(const _CharT*, const _CharT*) const;
+      _M_compare(const _CharT* s1, const _CharT* s2) const {
+        return strcmp(s1,s2);
+      }
 
       size_t
-      _M_transform(_CharT*, const _CharT*, size_t) const;
+      _M_transform(_CharT* to, const _CharT* from, size_t n) const {
+        strncpy(to, from, n);
+        return n;
+      }
 
   protected:
       /// Destructor.
@@ -2623,24 +2628,24 @@ namespace std
   template<typename _CharT>
     locale::id collate<_CharT>::id;
 
-  // Specializations.
-  template<>
-    int
-    collate<char>::_M_compare(const char*, const char*) const;
-
-  template<>
-    size_t
-    collate<char>::_M_transform(char*, const char*, size_t) const;
-
-#ifdef _GLIBCXX_USE_WCHAR_T
-  template<>
-    int
-    collate<wchar_t>::_M_compare(const wchar_t*, const wchar_t*) const;
-
-  template<>
-    size_t
-    collate<wchar_t>::_M_transform(wchar_t*, const wchar_t*, size_t) const;
-#endif
+//  // Specializations.
+//  template<>
+//    int
+//    collate<char>::_M_compare(const char*, const char*) const;
+//
+//  template<>
+//    size_t
+//    collate<char>::_M_transform(char*, const char*, size_t) const;
+//
+//#ifdef _GLIBCXX_USE_WCHAR_T
+//  template<>
+//    int
+//    collate<wchar_t>::_M_compare(const wchar_t*, const wchar_t*) const;
+//
+//  template<>
+//    size_t
+//    collate<wchar_t>::_M_transform(wchar_t*, const wchar_t*, size_t) const;
+//#endif
 
   template<typename _CharT>
     class collate_byname : public collate<_CharT>
@@ -3758,7 +3763,7 @@ namespace std
     protected:
       /// Destructor.
       virtual
-      ~moneypunct();
+      ~moneypunct() {}
 
       /**
        *  @brief  Return decimal point character.
@@ -3881,7 +3886,7 @@ namespace std
       // For use at construction time only.
        void
        _M_initialize_moneypunct(__c_locale __cloc = NULL,
-				const char* __name = NULL);
+				const char* __name = NULL) {}
     };
 
   template<typename _CharT, bool _Intl>
@@ -3890,11 +3895,11 @@ namespace std
   template<typename _CharT, bool _Intl>
     const bool moneypunct<_CharT, _Intl>::intl;
 
-  template<>
+/*  template<>
     moneypunct<char, true>::~moneypunct();
 
   template<>
-    moneypunct<char, false>::~moneypunct();
+    moneypunct<char, false>::~moneypunct();*
 
   template<>
     void
@@ -3921,7 +3926,7 @@ namespace std
     moneypunct<wchar_t, false>::_M_initialize_moneypunct(__c_locale,
 							 const char*);
 #endif
-
+*/
   template<typename _CharT, bool _Intl>
     class moneypunct_byname : public moneypunct<_CharT, _Intl>
     {
